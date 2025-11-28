@@ -5,7 +5,6 @@ project(Engine VERSION 0.1 LANGUAGES C CXX)
 # Sources and headers
 
 set(LIBRARY_SRCS
-     ${CUDA_FILES}
     "${CMAKE_CURRENT_SOURCE_DIR}/Source/Engine.cpp" # Host DLL wrapper
 )
 
@@ -13,17 +12,18 @@ set(LIBRARY_HDRS
     "${CMAKE_CURRENT_SOURCE_DIR}/Include/Engine.h"
 )
 
-# ------------------------
-# Build Engine DLL with CUDA enabled
-# ------------------------
+
 build_and_export_library(${PROJECT_NAME}
-  OUTPUT_DIR                Altera-Ody-Engine
-  BUILD_DESTINATION_PATH    ${GLOBAL_OUTPUT_DIR}
-  VERSION                   0.0.1
-  EXPORT_FLAG               ENGINE_EXPORTS
-  SOURCES                   ${LIBRARY_SRCS}
-  HEADERS                   ${LIBRARY_HDRS}
-  LINK_LIBS                 d3d11 dxgi d3dcompiler dwmapi
-  PUBLIC_INCLUDES           ${CMAKE_CURRENT_SOURCE_DIR}/Include
-  PRIVATE_INCLUDES          ${CMAKE_CURRENT_SOURCE_DIR}/Internal
+  OUTPUT_DIR             Altera-Ody-Engine
+  BUILD_DESTINATION_PATH ${GLOBAL_OUTPUT_DIR}
+  VERSION                0.0.1
+  EXPORT_FLAG            ENGINE_EXPORTS 
+  SOURCES                ${LIBRARY_SRCS}
+  HEADERS                ${LIBRARY_HDRS}
+  LINK_LIBS              d3d11 dxgi d3dcompiler dwmapi
+  PUBLIC_INCLUDES        ${CMAKE_CURRENT_SOURCE_DIR}/Include
+  PRIVATE_INCLUDES       ${CMAKE_CURRENT_SOURCE_DIR}/Internal
 )
+
+# Copy DLL (or .so/.dylib) to some folder after build
+copy_library_post_build(${PROJECT_NAME} "${APP_WF_PREFIX}")

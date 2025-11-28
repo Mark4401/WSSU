@@ -11,11 +11,6 @@
 #define ENGINE_API
 #endif
 
-#include <cstdint>
-
-// ------------------------------
-// Example engine global
-// ------------------------------
 
 // ------------------------------
 // CUDA wrapper interface (C linkage)
@@ -24,16 +19,13 @@
 extern "C" {
 #endif
 
-    // Wrapper function exposed to app
-    ENGINE_API void Engine_FindPerfectNumbers(int a, int b, int c, int d);
+
+    ENGINE_API int Addition(int One, int two);
+    ENGINE_API int Subtraction(int One, int two);
+
 
 #ifdef __cplusplus
 } // extern "C"
 #endif
 
 #endif // ENGINE_H
-
-
-/*
-//int Engine_Number = 3;
-*/

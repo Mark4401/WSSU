@@ -1,16 +1,18 @@
-set(WORKFLOW_ROOT_BUILD_DIR "${GLOBAL_OUTPUT_DIR}/Altera-Ody-Engine")
+set(WORKFLOW_ENGINE_ROOT_BUILD_DIR "${GLOBAL_OUTPUT_DIR}/Altera-Ody-Engine")
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    set(WF_PREFIX "${WORKFLOW_ROOT_BUILD_DIR}/Debug")
+    set(ENGINE_WF_PREFIX "${WORKFLOW_ENGINE_ROOT_BUILD_DIR}/Debug")
 else()
-    set(WF_PREFIX "${WORKFLOW_ROOT_BUILD_DIR}/Release")
+    set(ENGINE_WF_PREFIX "${WORKFLOW_ENGINE_ROOT_BUILD_DIR}/Release")
 endif()
 
-# include_directories(CUDA)
-# 
-# set(CUDA_FILES
-#     "${CMAKE_CURRENT_SOURCE_DIR}/CUDA/main.cu"
-# )
+set(WORKFLOW_APP_ROOT_BUILD_DIR "${GLOBAL_OUTPUT_DIR}/Altera-Ody-App")
+
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    set(APP_WF_PREFIX "${WORKFLOW_APP_ROOT_BUILD_DIR}/Debug")
+else()
+    set(APP_WF_PREFIX "${WORKFLOW_APP_ROOT_BUILD_DIR}/Release")
+endif()
 
 # ------------------------
 # Add subdirectories

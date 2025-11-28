@@ -2,9 +2,9 @@ cmake_minimum_required(VERSION 3.22 FATAL_ERROR)
 project(App VERSION 0.1 LANGUAGES C CXX)
 
 # Add workflow Library prefix to CMAKE_PREFIX_PATH (already determined in root)
-list(APPEND CMAKE_PREFIX_PATH "${WF_PREFIX}")
+list(APPEND CMAKE_PREFIX_PATH "${ENGINE_WF_PREFIX}")
 
-# find_package(Engine 0.0.1 REQUIRED)
+find_package(Engine 0.0.1 REQUIRED)
 
 # ------------------------
 # Sources and headers
@@ -29,5 +29,5 @@ App_builder(${PROJECT_NAME}
     HEADERS                     ${APP_HDRS}
     PUBLIC_INCLUDES             "${CMAKE_CURRENT_SOURCE_DIR}/Include"
     PRIVATE_INCLUDES            "${CMAKE_CURRENT_SOURCE_DIR}/Internal"
-    LINK_LIBS                   ws2_32 
+    LINK_LIBS                   ws2_32 Engine::Engine
 )

@@ -103,9 +103,7 @@ function(build_and_export_library TARGET_NAME)
         DESTINATION cmake
     )
 
-    # -------------------------------
-    # Automatically deploy DLL to dependent executables
-    # -------------------------------
+    # Ensures all files are properly moved to the users preferred destination 
     get_property(all_targets DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY BUILDSYSTEM_TARGETS)
     foreach(tgt IN LISTS all_targets)
         # Skip the library itself
@@ -113,7 +111,7 @@ function(build_and_export_library TARGET_NAME)
             continue()
         endif()
 
-        # Check if this target links against our library
+        # Check if this target links against the library
         get_target_property(linked_libs ${tgt} LINK_LIBRARIES)
         if(linked_libs MATCHES ${TARGET_NAME})
             add_custom_command(TARGET ${tgt} POST_BUILD

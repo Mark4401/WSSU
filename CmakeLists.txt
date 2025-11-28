@@ -25,7 +25,6 @@ include(cmake/DeployDLL.cmake)
 set(GLOBAL_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Builds")
 set(EXTERNAL_LIBRARIES "${CMAKE_CURRENT_SOURCE_DIR}/Dependencies")
 
-
 # ------------------------
 # Test Environment - Private ONLY
 # ------------------------
