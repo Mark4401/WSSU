@@ -1,10 +1,10 @@
-# cmake/build_application.cmake
+﻿# cmake/build_application.cmake
 
 function(App_builder TARGET_NAME)
     cmake_parse_arguments(
         APP
         ""                                      # no single-letter args
-        "OUTPUT_DIR;BUILD_DESTINATION_PATH;WIN32;EXPORT_FLAG"          # single-value keywords
+        "OUTPUT_DIR;BUILD_DESTINATION_PATH;WIN32;DEBUG_CONSOLE_INCLUSION_STATE;EXPORT_FLAG"          # single-value keywords
         "SOURCES;HEADERS;LINK_LIBS;PUBLIC_INCLUDES;PRIVATE_INCLUDES"
         ${ARGN}
     )
@@ -67,6 +67,35 @@ function(App_builder TARGET_NAME)
             endif()
         endif()
     endforeach()
+
+    # Debug CLI inclusion in either Debug or Released builds using int main() | optional use case for WinMain() also supported if 
+    # WIN32 is set to TRUE
+
+    if(APP_WIN32 AND APP_DEBUG_CONSOLE_INCLUSION_STATE)
+        message(WARNING "DEBUG_CONSOLE_INCLUSION_STATE is ignored when WIN32 is defined as TRUE. Enabling WinMain() entry point for WINDOWS 
+        applications only.")
+        elseif(NOT APP_WIN32 AND APP_DEBUG_CONSOLE_INCLUSION_STATE)
+            if(MSVC)
+                if(APP_DEBUG_CONSOLE_INCLUSION_STATE STREQUAL "ENABLED")
+                elseif(APP_DEBUG_CONSOLE_INCLUSION_STATE STREQUAL "RELEASE_ONLY")
+                    target_link_options(${TARGET_NAME} PRIVATE
+                        $<$<CONFIG:Release>:/SUBSYSTEM:CONSOLE>
+                        $<$<CONFIG:Release>:/ENTRY:mainCRTStartup>
+                        $<$<CONFIG:Debug>:/SUBSYSTEM:WINDOWS>
+                        $<$<CONFIG:Debug>:/ENTRY:mainCRTStartup>
+                    )
+                elseif(APP_DEBUG_CONSOLE_INCLUSION_STATE STREQUAL "DISABLED")
+                    target_link_options(${TARGET_NAME} PRIVATE
+                        $<$<CONFIG:Release>:/SUBSYSTEM:WINDOWS>
+                        $<$<CONFIG:Release>:/ENTRY:mainCRTStartup>
+                        $<$<CONFIG:Debug>:/SUBSYSTEM:WINDOWS>
+                        $<$<CONFIG:Debug>:/ENTRY:mainCRTStartup>
+                    )
+                else()
+                    message(WARNING "Unknown value for DEBUG_CONSOLE_INCLUSION_STATE: ${APP_DEBUG_CONSOLE_INCLUSION_STATE}")
+            endif()
+        endif()
+    endif()
 
     # Set output directories
     set_target_properties(${TARGET_NAME} PROPERTIES

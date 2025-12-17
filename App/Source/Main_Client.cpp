@@ -5,6 +5,7 @@ using namespace std;
 
 
 int main(int argv, char* argc[])
+//int WinMain()
 {
 
 	CLIENT* Primary = new CLIENT{ };
@@ -16,7 +17,7 @@ int main(int argv, char* argc[])
 
 	Create_Client_Window(Primary);
 
-	cout << "Client created!\n";
+	cout << "\Client created!\n";
 
 	while (Queue(Primary))
 	{
