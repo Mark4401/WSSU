@@ -151,11 +151,12 @@ void Delete_Win32_Window_Porperties(WIN32_CLIENT* Window_Properties)
 	{
 		DestroyWindow(Window_Properties->Client_Window_Handle);
 		Window_Properties->Client_Window_Handle = nullptr;
+		
+		cout << "\nWin32 Window properties & memory deleted --> System Event!\n";
 	}
 
 	Internal_Win32_properties_messanger = nullptr;
 
-	cout << "\nWin32 Window properties & memory deleted --> User Event!\n";
 
 	delete Window_Properties;
 }

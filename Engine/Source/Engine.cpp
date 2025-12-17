@@ -28,7 +28,7 @@ bool Queue(CLIENT* Client_reference)
         Win32_Event_Queue(false);
         Delete_Win32_Window_Porperties(Main_Window_Adds_Reference);
         
-        cout << "\nHI\n";
+        //cout << "\nHI\n";
         return false;
     }
 
@@ -45,7 +45,7 @@ void Destroy_Client_Window(CLIENT* Client_reference)
         return;
     }
 
-    cout << "\nWin32 Window properties & memory deleted --> User Event!\n";
+    cout << "\nRuntime properties & memory deleted --> System Event!\n";
 
     delete Client_reference;
 }
