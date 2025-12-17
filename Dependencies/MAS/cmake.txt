@@ -1,9 +1,0 @@
-
-/cmake/
-    BuildAndExportLibrary.cmake
-    CudaSetup.cmake
-    OutputDirs.cmake
-    InstallAndExport.cmake
-    AutoCopy.cmake
-    VS_AutoInstall.cmake
-    ConfigurePackage.cmake

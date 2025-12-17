@@ -15,13 +15,22 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+    #define SUCCESSFUL_QUEUE_POST    10
+    #define FAILURE_QUEUE_POST       5
+
+    typedef struct	__CLIENT__
+    {
+        int                 Width;
+        int                 Height;
+        const wchar_t*      Title;
+        bool                Active_black_title_bar;
+    }	CLIENT;
+
+    ENGINE_API int Create_Client_Window(CLIENT* Client_reference);
     
-    ENGINE_API extern const char* Platform_name;
-
-    ENGINE_API int Addition(int One, int two);
-    ENGINE_API int Subtraction(int One, int two);
-
-    ENGINE_API void Hook();
+    ENGINE_API bool Queue(CLIENT* Client_reference);
+    ENGINE_API void Destroy_Client_Window(CLIENT* Client_reference);
 
 #ifdef __cplusplus
 } // extern "C"

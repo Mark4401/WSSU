@@ -1,17 +1,17 @@
 cmake_minimum_required(VERSION 3.22 FATAL_ERROR)
-project(App VERSION 0.1 LANGUAGES C CXX)
+project(Altera_Odyssey VERSION 0.1 LANGUAGES C CXX)
 
 # Add workflow Library prefix to CMAKE_PREFIX_PATH (already determined in root)
-list(APPEND CMAKE_PREFIX_PATH "${Library_Prefix}")
+list(APPEND CMAKE_PREFIX_PATH "${Library_Path}")
 
-find_package(Engine 0.0.5 REQUIRED)
+find_package(AL_OD_Runtime 0.1 REQUIRED)
 
 #------------------------------------------------------------------------#
 # Project Shortcut-variables
 #------------------------------------------------------------------------#
 
 set(APP_SRCS    
-    "${CMAKE_CURRENT_SOURCE_DIR}/Source/App.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Source/Main_Client.cpp"
 )
 set(APP_HDRS
     ""
@@ -27,7 +27,7 @@ set(APP_HDRS
 #------------------------------------------------------------------------#
 
 App_builder(${PROJECT_NAME}
-    OUTPUT_DIR                  Altera-Ody-App
+    OUTPUT_DIR                  Client
     BUILD_DESTINATION_PATH      ${global_build_dir}
     WIN32                       OFF
     EXPORT_FLAG                 ""
@@ -35,7 +35,7 @@ App_builder(${PROJECT_NAME}
     HEADERS                     ${APP_HDRS}
     PUBLIC_INCLUDES             "${CMAKE_CURRENT_SOURCE_DIR}/Include"
     PRIVATE_INCLUDES            "${CMAKE_CURRENT_SOURCE_DIR}/Internal"
-    LINK_LIBS                   ws2_32 Engine::Engine
+    LINK_LIBS                   ws2_32 AL_OD_Runtime::AL_OD_Runtime
 )
 
 #------------------------------------------------------------------------#

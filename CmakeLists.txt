@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22 FATAL_ERROR)
-project(Altera_Odyssey_Global_presets VERSION 0.1 LANGUAGES C CXX)
+project(Global_presets VERSION 0.1 LANGUAGES C CXX)
 
 set(CMAKE_C_STANDARD 20)
 set(CMAKE_C_STANDARD_REQUIRED ON)
@@ -22,8 +22,8 @@ set(external_dependencies	"${CMAKE_CURRENT_SOURCE_DIR}/Dependencies")
 # Configuration variables & paths
 #------------------------------------------------------------------------#
 
-cfg_path_type(Application_Prefix	"${global_build_dir}/Altera-Ody-App")
-cfg_path_type(Library_Prefix		"${global_build_dir}/Altera-Ody-Engine")
+cfg_path_type(Client_Path		"${global_build_dir}/Client")
+cfg_path_type(Library_Path		"${global_build_dir}/Engine")
 
 
 add_subdirectory(App)

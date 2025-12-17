@@ -1,5 +1,5 @@
 ﻿cmake_minimum_required(VERSION 3.22 FATAL_ERROR)
-project(Engine VERSION 0.1 LANGUAGES C CXX)
+project(AL_OD_Runtime VERSION 0.2 LANGUAGES C CXX)
 
 set(CMAKE_C_STANDARD 20)
 set(CMAKE_C_STANDARD_REQUIRED ON)
@@ -15,7 +15,8 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(LIBRARY_SRCS
     "${CMAKE_CURRENT_SOURCE_DIR}/Source/Engine.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Source/Test-internal.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Source/Runtime_variables.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Source/Win32_properties.cpp"
 )
 
 set(LIBRARY_HDRS
@@ -32,9 +33,9 @@ set(LIBRARY_HDRS
 #------------------------------------------------------------------------#
 
 build_and_export_library(${PROJECT_NAME}
-  OUTPUT_DIR                    Altera-Ody-Engine
+  OUTPUT_DIR                    Engine
   BUILD_DESTINATION_PATH        ${global_build_dir}
-  VERSION                       0.0.5
+  VERSION                       0.1
   EXPORT_FLAG                   ENGINE_EXPORTS 
   SOURCES                       ${LIBRARY_SRCS}
   HEADERS                       ${LIBRARY_HDRS}
@@ -48,4 +49,4 @@ build_and_export_library(${PROJECT_NAME}
 #------------------------------------------------------------------------#
 
 # Copy DLL (or .so/.dylib) to some folder after build
-copy_library_post_build(${PROJECT_NAME} "${Application_Prefix}")
+copy_library_post_build(${PROJECT_NAME} "${Client_Path}")
