@@ -5,6 +5,8 @@ using namespace std;
 
 int main(int argv, char* argc[])
 {
+    Monitor_Information();
+
     CLIENT* Primary = new CLIENT{ };
 
     Primary->Width = 700;

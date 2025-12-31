@@ -24,5 +24,6 @@ struct Physical_Screen_Info
 
 Physical_Screen_Info Physical_Monitor_Dimensions(HWND Monitor_handle);
 
+void Start_Up_Hardware_info();
 
 #endif // !WIN32_PHYS_MONITOR_PROPERTIES_H

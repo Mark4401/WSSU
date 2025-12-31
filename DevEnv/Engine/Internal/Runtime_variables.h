@@ -50,7 +50,6 @@ typedef const wchar_t* Wide_Char;
 #define CLIENT_REFERENCE_MISSING							5
 #define CLIENT_REFERENCE_PRESENT							10
 
-
 /*	USECASE
 
 	int8_s		a = -100;
@@ -70,7 +69,10 @@ typedef const wchar_t* Wide_Char;
 #include <dxgi.h>          // DXGI (swap chain, adapters)
 #include <d3dcompiler.h>   // Shared compilation (optional, needed if compiling HLSL at runtime)
 #include <DirectXMath.h>  // Optional, but handy for math
+#include <shellscalingapi.h> 
+#include <strsafe.h>
 
+#pragma comment(lib, "Shcore.lib")
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "dxgi.lib")
 #pragma comment(lib, "d3dcompiler.lib")

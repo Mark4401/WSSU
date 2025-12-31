@@ -1,12 +1,18 @@
 #include "Engine.h"
 #include"Runtime_variables.h"
 #include"Win32_properties.h"
+#include"Win32_Phys_Monitor_Properties.h"
 
 using namespace std;
 
 bool Actively_running = true;
 
 static WIN32_CLIENT* Main_Window_Adds_Reference = nullptr;
+
+void Monitor_Information()
+{
+    Start_Up_Hardware_info();
+}
 
 int Create_Client_Window(CLIENT* Client_reference)
 {

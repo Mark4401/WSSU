@@ -27,6 +27,7 @@ extern "C" {
         bool                Active_black_title_bar;
     }	CLIENT;
 
+    ENGINE_API void Monitor_Information();
     ENGINE_API int Create_Client_Window(CLIENT* Client_reference);
     
     ENGINE_API bool Queue(CLIENT* Client_reference);
