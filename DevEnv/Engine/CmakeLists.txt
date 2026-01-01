@@ -19,6 +19,7 @@ set(LIBRARY_SRCS
     "${CMAKE_CURRENT_SOURCE_DIR}/Source/Win32_properties.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Source/Win32_Keyboard_properties.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Source/Win32_Phys_Monitor_Properties.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Source/Window_Alignment.cpp"
 )
 
 set(LIBRARY_HDRS

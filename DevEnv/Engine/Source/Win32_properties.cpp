@@ -5,11 +5,6 @@
 
 using namespace std;
 
-bool Actively_running_status = true;
-bool Primary_Win32_Window_Class_Register = false;
-
-static WIN32_CLIENT* Internal_Win32_properties_messanger = nullptr;
-
 LRESULT CALLBACK
 Main_Wincow_Proc(HWND Window, UINT Message, WPARAM WParam, LPARAM LParam)
 {
@@ -32,8 +27,6 @@ Main_Wincow_Proc(HWND Window, UINT Message, WPARAM WParam, LPARAM LParam)
 	}
 	case WM_DESTROY:
 	{
-		Actively_running_status = false;
-
 		cout << "\nWindow closed\n";
 
 		PostQuitMessage(0);
@@ -68,6 +61,8 @@ void Black_Title_Bar(HWND Window_handle)
 	ShowWindow(Window_handle, SW_SHOW);
 }
 
+static bool Class_Register = false;
+
 WIN32_CLIENT* Create_Window_Properties(int Height, int Width, const wchar_t* App_title, bool Dark_title_bar)
 {
 	WIN32_CLIENT* Window = new WIN32_CLIENT();
@@ -87,7 +82,7 @@ WIN32_CLIENT* Create_Window_Properties(int Height, int Width, const wchar_t* App
 	
 	Wide_Char Window_CLass_Name = App_title;
 
-	if (!Primary_Win32_Window_Class_Register)
+	if (!Class_Register)
 	{
 		WNDCLASSW Win32_Client_CLASS = { };
 
@@ -103,7 +98,7 @@ WIN32_CLIENT* Create_Window_Properties(int Height, int Width, const wchar_t* App
 			exit(EXIT_FAILURE);
 		}
 		
-		Primary_Win32_Window_Class_Register = true;
+		Class_Register = true;
 	}
 
 	Window->Client_Window_Handle = CreateWindowExW(
@@ -139,16 +134,14 @@ WIN32_CLIENT* Create_Window_Properties(int Height, int Width, const wchar_t* App
 	cout << "X Scale: : " << Monitor_Ref_Data.dpi_Scaled_X << "\tY Scale: " << Monitor_Ref_Data.dpi_Scaled_Y << "\n\n";
 
 	Physical_Monitor_Position(Window->Client_Window_Handle);
-	
-	Internal_Win32_properties_messanger = Window;
-	
+
 	return Window;
 }
 
 
-bool Win32_Event_Queue(bool Active_state)
+bool Win32_Event_Queue(bool Active_state, WIN32_CLIENT& Data_ref)
 {
-	Actively_running_status = Active_state;
+	Data_ref.Currently_Running = Active_state;
 	MSG Message_Loop = { };
 
 	while (PeekMessageW(&Message_Loop, 0, 0, 0, PM_REMOVE))
@@ -158,38 +151,25 @@ bool Win32_Event_Queue(bool Active_state)
 
 		if (Message_Loop.message == WM_QUIT)
 		{
-			Actively_running_status = false;
+			Data_ref.Currently_Running = false;
 
-			Internal_Win32_properties_messanger->Currently_Running = false;
-
-			return Actively_running_status;
+			return Active_state = false;
 		}
 	}
 
-	Internal_Win32_properties_messanger->Currently_Running = true;
-	return Actively_running_status;
+	return Active_state = true;
 }
 
 
-void Delete_Win32_Window_Porperties(WIN32_CLIENT* Window_Properties)
+void Delete_Win32_Window_Porperties(WIN32_CLIENT& Data_ref)
 {
-	if (!Window_Properties)
+	if (Data_ref.Client_Window_Handle)
 	{
-		return;
-	}
-
-	if (Window_Properties->Client_Window_Handle)
-	{
-		DestroyWindow(Window_Properties->Client_Window_Handle);
-		Window_Properties->Client_Window_Handle = nullptr;
+		DestroyWindow(Data_ref.Client_Window_Handle);
+		Data_ref.Client_Window_Handle = nullptr;
 		
 		cout << "\nWin32 Window properties & memory deleted --> System Event!\n";
 	}
-
-	Internal_Win32_properties_messanger = nullptr;
-
-
-	delete Window_Properties;
 }
 
 

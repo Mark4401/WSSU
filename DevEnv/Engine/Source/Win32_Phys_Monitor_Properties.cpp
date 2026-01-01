@@ -101,6 +101,20 @@ Physical_Screen_Info Physical_Monitor_Dimensions(HWND Monitor_handle)
 	return info;
 }
 
+/*
+	Physical_Screen_Info Monitor_Ref_Data = Physical_Monitor_Dimensions(Window->Client_Window_Handle);
+
+	cout << "\nPhysical Display Dimensions: \n\n";
+	cout << "X (LEFT EDGE): " << Monitor_Ref_Data.X_Min << " \t X (RIGHT EDGE): " << Monitor_Ref_Data.X_Max << "\n";
+	cout << "Y (TOP EDGE): " << Monitor_Ref_Data.Y_Min << " \t Y (BOTTOM EDGE): " << Monitor_Ref_Data.Y_Max << "\n";
+
+	cout << "\nWindow DPI Scale values: \n\n";
+	cout << "Height: " << Monitor_Ref_Data.dpi_Scaled_Height << "\tWight: " << Monitor_Ref_Data.dpi_Scaled_Width << "\n";
+	cout << "X Scale: : " << Monitor_Ref_Data.dpi_Scaled_X << "\tY Scale: " << Monitor_Ref_Data.dpi_Scaled_Y << "\n\n";
+
+	Physical_Monitor_Position(Window->Client_Window_Handle);
+*/
+
 struct Monitor_Meta_Data
 {
 	WCHAR Monitor_name[32];
@@ -112,10 +126,10 @@ struct Monitor_Meta_Data
 
 	float DPI_Scale;
 
-	float Vurtual_Width;
-	float Vurtual_Height;
-	float Vurtual_Workable_Width_Area;
-	float Vurtual_Workable_Height_Area;
+	float Virtual_Width;
+	float Virtual_Height;
+	float Virtual_Workable_Width_Area;
+	float Virtual_Workable_Height_Area;
 };
 
 static Monitor_Meta_Data mmd_Physica_Monitor[6];
@@ -162,14 +176,14 @@ CALLBACK Monitor_Enum_Proc(HMONITOR Monitor_, HDC, LPRECT, LPARAM)
 
 	MMD_Info_data.DPI_Scale = MMD_Info_data.X_Dpi / 96.0f;
 
-	MMD_Info_data.Vurtual_Width = MMD_Info_data.Hardware_Width / MMD_Info_data.DPI_Scale;
-	MMD_Info_data.Vurtual_Height = MMD_Info_data.Hardware_Hieght / MMD_Info_data.DPI_Scale;
+	MMD_Info_data.Virtual_Width = MMD_Info_data.Hardware_Width / MMD_Info_data.DPI_Scale;
+	MMD_Info_data.Virtual_Height = MMD_Info_data.Hardware_Hieght / MMD_Info_data.DPI_Scale;
 
-	int Vurtual_Workable_Width_region = Physical_Monitor_Device.rcWork.right - Physical_Monitor_Device.rcWork.left;
-	int Vurtual_Workable_Height_region = Physical_Monitor_Device.rcWork.bottom - Physical_Monitor_Device.rcWork.top;
+	int Virtual_Workable_Width_region = Physical_Monitor_Device.rcWork.right - Physical_Monitor_Device.rcWork.left;
+	int Virtual_Workable_Height_region = Physical_Monitor_Device.rcWork.bottom - Physical_Monitor_Device.rcWork.top;
 
-	MMD_Info_data.Vurtual_Workable_Width_Area = Vurtual_Workable_Width_region / MMD_Info_data.DPI_Scale;
-	MMD_Info_data.Vurtual_Workable_Height_Area = Vurtual_Workable_Height_region / MMD_Info_data.DPI_Scale;
+	MMD_Info_data.Virtual_Workable_Width_Area = Virtual_Workable_Width_region / MMD_Info_data.DPI_Scale;
+	MMD_Info_data.Virtual_Workable_Height_Area = Virtual_Workable_Height_region / MMD_Info_data.DPI_Scale;
 
 	mmd_Init_Count++;
 
@@ -197,8 +211,10 @@ void Start_Up_Hardware_info()
 		std::wcout << L"  DPI: " << m.X_Dpi << L"\n";
 		std::wcout << L"  Scale Factor: " << (m.DPI_Scale * 100.0f) << L"%\n";
 		std::wcout << L"  Virtual Resolution: "
-			<< m.Vurtual_Width << L"x" << m.Vurtual_Height << L"\n";
+			<< m.Virtual_Width << L"x" << m.Virtual_Height << L"\n";
 		std::wcout << L"  Virtual Work Area: "
-			<< m.Vurtual_Workable_Width_Area << L"x" << m.Vurtual_Workable_Height_Area << L"\n\n";
+			<< m.Virtual_Workable_Width_Area << L"x" << m.Virtual_Workable_Height_Area << L"\n\n";
+
+		cout << m.X_Dpi << "\t" << m.Y_Dpi << "\n";
 	}
 }

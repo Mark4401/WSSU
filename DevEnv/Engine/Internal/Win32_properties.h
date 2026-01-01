@@ -39,12 +39,11 @@ typedef struct WIN32_CLIENT
 	int					n_Command_Show;
 } WIN32_CLIENT;
 
-extern bool Primary_Win32_Window_Class_Register;
-
 WIN32_CLIENT* Create_Window_Properties(int Height, int Width, const wchar_t* App_title, bool Dark_title_bar);
 
-bool Win32_Event_Queue(bool Active_state);
+bool Win32_Event_Queue(bool Active_state, WIN32_CLIENT& Data_ref);
 
-void Delete_Win32_Window_Porperties(WIN32_CLIENT* Window_Properties);
+void Delete_Win32_Window_Porperties(WIN32_CLIENT& Data_ref);
+
 
 #endif // !WIN32_PROPERTIES_H
