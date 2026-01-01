@@ -39,7 +39,6 @@ extern "C" {
         int                 Height;
         const wchar_t*      Title;
         bool                Active_black_title_bar;
-        bool                Active_state;
     };
 
     ENGINE_API void Monitor_Information();

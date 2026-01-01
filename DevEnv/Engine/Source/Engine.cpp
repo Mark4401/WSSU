@@ -33,21 +33,21 @@ int32_s Create_Client_Window(CLIENT Client_reference)
 
 bool Queue(int32_s Client_Index, bool Active)
 {
+
     if (Client_Index < 0 || Client_Index >= Client_Table_index) { return false; };
 
     WIN32_CLIENT& Client_Ref = *Client_Table_Registry[Client_Index];
-
+    
+    Active = Win32_Event_Queue(Active, Client_Ref);;
+    
     if(!Active)
     {
-        Win32_Event_Queue(false, Client_Ref);
         Delete_Win32_Window_Porperties(Client_Ref);
 
         Client_Table_Registry[Client_Table_index] = nullptr;
-
-        return Active = false;
     }
 
-    return Win32_Event_Queue(true, Client_Ref);
+    return Active;
 }
 
 

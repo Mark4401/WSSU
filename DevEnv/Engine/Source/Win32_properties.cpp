@@ -29,6 +29,8 @@ Main_Wincow_Proc(HWND Window, UINT Message, WPARAM WParam, LPARAM LParam)
 	{
 		cout << "\nWindow closed\n";
 
+
+
 		PostQuitMessage(0);
 
 		return 0;
@@ -61,8 +63,6 @@ void Black_Title_Bar(HWND Window_handle)
 	ShowWindow(Window_handle, SW_SHOW);
 }
 
-static bool Class_Register = false;
-
 WIN32_CLIENT* Create_Window_Properties(int Height, int Width, const wchar_t* App_title, bool Dark_title_bar)
 {
 	WIN32_CLIENT* Window = new WIN32_CLIENT();
@@ -82,23 +82,18 @@ WIN32_CLIENT* Create_Window_Properties(int Height, int Width, const wchar_t* App
 	
 	Wide_Char Window_CLass_Name = App_title;
 
-	if (!Class_Register)
-	{
-		WNDCLASSW Win32_Client_CLASS = { };
+	WNDCLASSW Win32_Client_CLASS = { };
 
-		Win32_Client_CLASS.style			= CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
-		Win32_Client_CLASS.lpfnWndProc		= Main_Wincow_Proc;
-		Win32_Client_CLASS.hInstance		= Window->h_Current_Instance;
-		Win32_Client_CLASS.lpszClassName	= Window_CLass_Name;
-		
-		if ( !RegisterClassW(&Win32_Client_CLASS) )
-		{
-			delete Window;
-			cerr << "\nWindow Registration Failed!\n";
-			exit(EXIT_FAILURE);
-		}
-		
-		Class_Register = true;
+	Win32_Client_CLASS.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
+	Win32_Client_CLASS.lpfnWndProc = Main_Wincow_Proc;
+	Win32_Client_CLASS.hInstance = Window->h_Current_Instance;
+	Win32_Client_CLASS.lpszClassName = Window_CLass_Name;
+
+	if (!RegisterClassW(&Win32_Client_CLASS))
+	{
+		delete Window;
+		cerr << "\nWindow Registration Failed!\n";
+		exit(EXIT_FAILURE);
 	}
 
 	Window->Client_Window_Handle = CreateWindowExW(
