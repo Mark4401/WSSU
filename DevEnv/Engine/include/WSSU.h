@@ -30,8 +30,10 @@ typedef uint64_t int64_u;
 extern "C" {
 #endif
 
-    #define SUCCESSFUL_QUEUE_POST    10
-    #define FAILURE_QUEUE_POST       5
+    /*
+    
+        - LEGACY STRUCTS
+	    - REFERENCE USE ONLY!
 
     struct	CLIENT
     {
@@ -41,12 +43,9 @@ extern "C" {
         bool                Active_black_title_bar;
     };
 
+    */
     ENGINE_API void Default_Systen_info();
-    ENGINE_API void Monitor_Information();
-    ENGINE_API int32_s Create_Client_Window(CLIENT Client_reference);
-    
-    ENGINE_API bool Queue(int32_s Client_Index, bool Active);
-    ENGINE_API void Clean_Up();
+
 
 #ifdef __cplusplus
 } // extern "C"

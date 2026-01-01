@@ -1,6 +1,5 @@
-#include <Engine.h>
+#include <WSSU.h>
 #include <iostream>
-#include"3_Primary_WIndows.h"
 
 using namespace std;
 
@@ -12,9 +11,3 @@ int main(int argv, char* argc[])
 
     return 0;
 }
-
-
-/*
-
-if (!GetClientRect(DEF_handle, &DEF_Handle_Dimensions)) { cerr << "GetClientRect failed: " << GetLastError() << "\n"; return; }
-*/

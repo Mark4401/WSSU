@@ -1,9 +1,12 @@
 ﻿#include"Win32_properties.h"
 #include"Runtime_variables.h"
-#include"Win32_Keyboard_properties.h"
-#include"Win32_Phys_Monitor_Properties.h"
 
 using namespace std;
+
+/*
+
+	_ LEGACY DECLATIATIONS & INPLENTATIONS 
+	_ REFERENCE USE ONLY!
 
 LRESULT CALLBACK
 Main_Wincow_Proc(HWND Window, UINT Message, WPARAM WParam, LPARAM LParam)
@@ -77,8 +80,6 @@ WIN32_CLIENT* Create_Window_Properties(int Height, int Width, const wchar_t* App
 {
 	WIN32_CLIENT* Window = new WIN32_CLIENT();
 
-	Window->Memory.ID_type				= DEFAULT_WINDOW_ID;
-	Window->Memory.Memory				= nullptr;
 	Window->Height						= Height;
 	Window->Width						= Width;
 	Window->Title						= App_title;
@@ -176,5 +177,4 @@ void Delete_Win32_Window_Porperties(WIN32_CLIENT& Data_ref)
 		cout << "\nWin32 Window properties & memory deleted --> System Event!\n";
 	}
 }
-
-
+*/

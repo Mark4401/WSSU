@@ -1,5 +1,5 @@
 ﻿cmake_minimum_required(VERSION 3.22 FATAL_ERROR)
-project(AL_OD_Runtime VERSION 0.2 LANGUAGES C CXX)
+project(WSSU VERSION 0.3 LANGUAGES C CXX)
 
 set(CMAKE_C_STANDARD 20)
 set(CMAKE_C_STANDARD_REQUIRED ON)
@@ -14,17 +14,14 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 #------------------------------------------------------------------------#
 
 set(LIBRARY_SRCS
-    "${CMAKE_CURRENT_SOURCE_DIR}/Source/Engine.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Source/WSSU.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Source/Runtime_variables.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Source/Win32_properties.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Source/Win32_Keyboard_properties.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Source/Win32_Phys_Monitor_Properties.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Source/Window_Alignment.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Source/Windows_Prop_And_Exm.cpp"
 )
 
 set(LIBRARY_HDRS
-    "${CMAKE_CURRENT_SOURCE_DIR}/Include/Engine.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Include/WSSU.h"
 )
 
 #------------------------------------------------------------------------#
@@ -39,7 +36,7 @@ set(LIBRARY_HDRS
 build_and_export_library(${PROJECT_NAME}
   OUTPUT_DIR                    Engine
   BUILD_DESTINATION_PATH        ${global_build_dir}
-  VERSION                       0.2.1
+  VERSION                       0.3.0
   EXPORT_FLAG                   ENGINE_EXPORTS 
   SOURCES                       ${LIBRARY_SRCS}
   HEADERS                       ${LIBRARY_HDRS}

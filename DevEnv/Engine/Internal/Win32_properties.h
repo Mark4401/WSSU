@@ -3,6 +3,10 @@
 
 #include"Runtime_variables.h"
 
+/*
+
+	_ LEGACY STRUCTS
+	_ REFERENCE USE ONLY!
 
 typedef struct WIN32_IO_DATA
 {
@@ -24,9 +28,9 @@ typedef struct WIN32_MEMORY
 	int					ID_type;
 } WIN32_MEMORY;
 
+*/
 typedef struct WIN32_CLIENT
 {
-	WIN32_MEMORY		Memory;
 	int					Height;
 	int					Width;
 	Wide_Char			Title;
@@ -38,12 +42,6 @@ typedef struct WIN32_CLIENT
 	bool				Active_Black_title_Bar;
 	int					n_Command_Show;
 } WIN32_CLIENT;
-
-WIN32_CLIENT* Create_Window_Properties(int Height, int Width, const wchar_t* App_title, bool Dark_title_bar);
-
-bool Win32_Event_Queue(bool Active_state, WIN32_CLIENT& Data_ref);
-
-void Delete_Win32_Window_Porperties(WIN32_CLIENT& Data_ref);
 
 
 #endif // !WIN32_PROPERTIES_H

@@ -4,7 +4,7 @@ project(Altera_Odyssey VERSION 0.1 LANGUAGES C CXX)
 # Add workflow Library prefix to CMAKE_PREFIX_PATH (already determined in root)
 list(APPEND CMAKE_PREFIX_PATH "${Library_Path}")
 
-find_package(AL_OD_Runtime 0.2.1 REQUIRED)
+find_package(WSSU 0.3.0 REQUIRED)
 
 #------------------------------------------------------------------------#
 # Project Shortcut-variables
@@ -13,7 +13,6 @@ find_package(AL_OD_Runtime 0.2.1 REQUIRED)
 set(APP_SRCS    
     # "${CMAKE_CURRENT_SOURCE_DIR}/Source/C_Lang_Demo/Main_Client.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/Source/Main_Client.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Source/Old_Demos/3_Primary_WIndows.cpp"
 )
 set(APP_HDRS
     ""
@@ -43,7 +42,7 @@ App_builder(${PROJECT_NAME}
     PUBLIC_INCLUDES                     "${CMAKE_CURRENT_SOURCE_DIR}/Include"
     PRIVATE_INCLUDES                    "${CMAKE_CURRENT_SOURCE_DIR}/Internal"
     
-    LINK_LIBS                           ws2_32 AL_OD_Runtime::AL_OD_Runtime
+    LINK_LIBS                           ws2_32 WSSU::WSSU
 )
 
 #------------------------------------------------------------------------#
