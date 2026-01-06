@@ -1,7 +1,6 @@
 #include "WSSU.h"
 #include"Runtime_variables.h"
-#include"Win32_properties.h"
-#include"Windows_Prop_And_Exm.h"
+#include"WIn32_Window_Manager.h"
 
 using namespace std;
 
@@ -15,9 +14,9 @@ void Get_Window_System_Active_List()
     Top_Level_Windows();
 }
 
-void Init_Window(const wchar_t* title)
+void Init_Window(const wchar_t* title, int Width, int Height, bool Black_title_bar)
 {
-    Set_Window_info(title);
+    Set_Window_info(title, Width, Height, Black_title_bar);
 }
 
 void Process_Lists()

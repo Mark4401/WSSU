@@ -8,7 +8,7 @@ void Physical_Display_Properties();
 
 void Top_Level_Windows();
 
-void Set_Window_info(const wchar_t* title);
+void Set_Window_info(const wchar_t* title, int Width, int Height, bool Black_title_bar);
 
 static void Retrieve_Window_Destruction_By_User(HWND WIndow);
 

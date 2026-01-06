@@ -17,7 +17,8 @@ set(LIBRARY_SRCS
     "${CMAKE_CURRENT_SOURCE_DIR}/Source/WSSU.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Source/Runtime_variables.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Source/Win32_properties.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Source/Windows_Prop_And_Exm.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Source/WIn32_Window_Manager.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Source/Keyboard_Win32.cpp"
 )
 
 set(LIBRARY_HDRS

@@ -1,4 +1,5 @@
-#include "Windows_Prop_And_Exm.h"
+#include "WIn32_Window_Manager.h"
+#include"Keyboard_Win32.h"
 #include<iostream>
 
 using namespace std;
@@ -83,12 +84,25 @@ Default_Window_Proc(HWND Window, UINT Message, WPARAM WParam, LPARAM LParam)
 
 			if (( Deafult_Window.Process_owned_WI_count) == 0)
 			{
-				cout << "\nActive Window list Empty! ONLY DLL handle Active\n";
+				cout << "\n\nActive Window list Empty! ONLY DLL handle Active\n";
 
 				PostQuitMessage(0);
 			}
 
 			return 0;
+		}
+		case WM_KEYDOWN:
+		case WM_KEYUP:
+		case WM_SYSKEYDOWN:
+		case WM_SYSKEYUP:
+		{
+			Keyboard_Data(Window, Message, WParam, LParam);
+
+			cout << Return_Virtual_Code() << "\t | VK CODE  \n";
+			cout << Return_Key_Flags() << "\t | KEY FLAG    \n";
+			cout << Return_Scan_Code() << "\t | SCAN CODE   \n\n";
+
+			break;
 		}
 		case WM_PAINT:
 		{
@@ -106,7 +120,18 @@ Default_Window_Proc(HWND Window, UINT Message, WPARAM WParam, LPARAM LParam)
 	return DefWindowProcW(Window, Message, WParam, LParam);
 };
 
-void Set_Window_info(const wchar_t* title)
+void Black_Title_Bar(HWND Window_handle)
+{
+	BOOL dark_mode = true;
+
+	DwmSetWindowAttribute(Window_handle,
+		DWMWA_USE_IMMERSIVE_DARK_MODE, &dark_mode, sizeof(dark_mode));
+	
+	//ShowWindow(Window_handle, SW_HIDE);
+	//ShowWindow(Window_handle, SW_SHOW);
+}
+
+void Set_Window_info(const wchar_t* title, int Width, int Height, bool Black_title_bar)
 {
 	if (Deafult_Window.Class_Registry == false)
 	{
@@ -131,10 +156,10 @@ void Set_Window_info(const wchar_t* title)
 		DEAFULT_WINDOW_CLASS.lpszClassName,
 		title,
 		WS_OVERLAPPEDWINDOW | WS_VISIBLE,
-		400,
-		420,
-		800,
-		800,
+		0,
+		0,
+		Width,
+	Height,
 		NULL,
 		NULL,
 		DEAFULT_WINDOW_CLASS.hInstance,
@@ -145,7 +170,15 @@ void Set_Window_info(const wchar_t* title)
 	{
 		cerr << "\nWindow Creation Failed!\n";
 		exit(EXIT_FAILURE);
-	};
+	}
+	else if ( Black_title_bar == true )
+	{
+		Black_Title_Bar(DEF_Screen);
+	}
+	else
+	{
+		// addictions go here if applicable 
+	}
 
 	ShowWindow(DEF_Screen, SW_SHOW);
 
@@ -174,6 +207,12 @@ void Retrieve_Window_Destruction_By_User(HWND Window)
 
 void ALL_Process_Window_Lists()
 {
+	if (Deafult_Window.Process_owned_WI_count == 0 )
+	{
+		cout << "NON Primary Window created! program will continue indefensibly without Post Code 0!" << "\n";
+
+		exit(EXIT_FAILURE);
+	}
 
 	for (int I = 0; I < Deafult_Window.Window_instance_Count; I++)
 	{
@@ -196,7 +235,7 @@ bool Queue()
 		{
 			Active_state = false;
 
-			cout << "WM_QUIT win32 message called!\n";
+			cout << "\nWM_QUIT win32 message called!\n";
 
 			return Active_state;
 		}

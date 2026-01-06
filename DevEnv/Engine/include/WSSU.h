@@ -50,7 +50,7 @@ extern "C" {
     
     ENGINE_API void Get_Window_System_Active_List();
 
-    ENGINE_API void Init_Window(const wchar_t* title);
+    ENGINE_API void Init_Window(const wchar_t* title, int Width, int Height, bool Black_title_bar);
 
     ENGINE_API void Process_Lists();
 
