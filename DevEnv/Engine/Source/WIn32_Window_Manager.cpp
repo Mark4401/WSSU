@@ -1,5 +1,5 @@
-#include <WIn32_Window_Manager.h>
-#include<Keyboard_Win32.h>
+#include "WIn32_Window_Manager.h"
+#include"Keyboard_Win32.h"
 #include<iostream>
 
 using namespace std;
@@ -9,7 +9,8 @@ struct Window_handle_count
 	int Count;
 };
 
-#define MAX_WH_LIST	10
+#define MAX_WH_LIST		10
+#define MAX_PM_COUNT	10
 
 struct WIn32_HWND_List
 {
@@ -58,9 +59,8 @@ struct Window_Data
 	int					Process_owned_WI_count			= 0;
 	int					Window_instance_Count			= 0;
 	bool				Class_Registry					= false;
-	//void*				WIN32_HWND_Handle_Refence_Data	= nullptr;
 	WIn32_HWND_List		Data							= { };
-	Physical_Monitor	Monitor							[10];
+	Physical_Monitor	Monitor							[MAX_PM_COUNT];
 };
 
 Window_Data Deafult_Window = { };
@@ -102,6 +102,9 @@ Default_Window_Proc(HWND Window, UINT Message, WPARAM WParam, LPARAM LParam)
 				cout << "\n\nActive Window list Empty! ONLY DLL handle Active\n";
 
 				PostQuitMessage(0);
+				
+				UnregisterClassW(DEAFULT_WINDOW_CLASS.lpszClassName, DEAFULT_WINDOW_CLASS.hInstance);
+				
 			}
 
 			return 0;
@@ -174,7 +177,7 @@ void Set_Window_info(const wchar_t* title, int Width, int Height, bool Black_tit
 		0,
 		0,
 		Width,
-	Height,
+		Height,
 		NULL,
 		NULL,
 		DEAFULT_WINDOW_CLASS.hInstance,
@@ -251,6 +254,8 @@ bool Queue()
 			Active_state = false;
 
 			cout << "\nWM_QUIT win32 message called!\n";
+
+			
 
 			return Active_state;
 		}

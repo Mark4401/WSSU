@@ -20,12 +20,14 @@ set(LIBRARY_SRCS
     "${CMAKE_CURRENT_SOURCE_DIR}/Source/Keyboard_Win32.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Source/Keyboard.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Source/Window.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Source/Pulse.cpp"
 )
 
 set(LIBRARY_HDRS
     "${CMAKE_CURRENT_SOURCE_DIR}/Include/WSSU/WSSU.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Include/WSSU/Window.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Include/WSSU/Keyboard.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Include/WSSU/Pulse.h"
 )
 
 #------------------------------------------------------------------------#
@@ -41,7 +43,7 @@ build_and_export_library(${PROJECT_NAME}
   OUTPUT_DIR                    Engine
   BUILD_DESTINATION_PATH        ${global_build_dir}
   VERSION                       0.3.0
-  EXPORT_FLAG                   ENGINE_EXPORTS 
+  EXPORT_FLAG                   WSSU_EXPORT 
   SOURCES                       ${LIBRARY_SRCS}
   HEADERS                       ${LIBRARY_HDRS}
   LINK_LIBS                     d3d11 dxgi d3dcompiler dwmapi shcore

@@ -1,10 +1,7 @@
 #include<stdlib.h>
 #include<stdio.h>
 #include<stdbool.h>
-#include<WSSU.h>
-
-//using namespace std;
-
+#include<WSSU/WSSU.h>
 
 int main(int argv, char* argc[])
 //int WinMain()
@@ -17,10 +14,13 @@ int main(int argv, char* argc[])
 
     Process_Lists();
 
-    while (Events())
+    while (System_Queue())
     {
-        //return true;
-    };
+
+    }
+
+    Retrieve_All_Active_Window_instances();
+    
 
 	return 0;
 }

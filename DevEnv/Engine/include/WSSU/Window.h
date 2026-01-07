@@ -44,15 +44,13 @@ extern "C" {
         BODERLESS
     };
 
-    ENGINE_API void Default_Systen_info();
+    WSSU_API void Default_Systen_info();
 
-    ENGINE_API void Get_Window_System_Active_List();
+    WSSU_API void Retrieve_All_Active_Window_instances();
 
-    ENGINE_API void Init_Window(const wchar_t* title, int Width, int Height, bool Black_title_bar, Window_Position Position, Window_Type Type);
+    WSSU_API void Init_Window(const wchar_t* title, int Width, int Height, bool Black_title_bar, enum Window_Position Position, enum Window_Type Type);
 
-    ENGINE_API void Process_Lists();
-
-    ENGINE_API bool Events();
+    WSSU_API void Process_Lists();
 
 #ifdef __cplusplus
 } // extern "C"

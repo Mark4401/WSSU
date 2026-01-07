@@ -17,17 +17,18 @@ typedef uint64_t int64_u;
 
 
 #ifdef _WIN32
-#ifdef ENGINE_EXPORTS
-#define ENGINE_API __declspec(dllexport)
+#ifdef WSSU_EXPORT
+#define WSSU_API __declspec(dllexport)
 #else
-#define ENGINE_API __declspec(dllimport)
+#define WSSU_API __declspec(dllimport)
 #endif
 #else
-#define ENGINE_API
+#define WSSU_API
 #endif
 
 #include<WSSU/Window.h>
 #include<WSSU/Keyboard.h>
+#include<WSSU/Pulse.h>
 
 
 #endif // WSSU_H
