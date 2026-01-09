@@ -1,4 +1,4 @@
-function(build_and_export_library TARGET_NAME)
+﻿function(build_and_export_library TARGET_NAME)
     cmake_parse_arguments(
         LIB
         ""
@@ -51,12 +51,8 @@ function(build_and_export_library TARGET_NAME)
     endif()
 
     # Output directories
-    set_target_properties(${TARGET_NAME} PROPERTIES
-        ARCHIVE_OUTPUT_DIRECTORY "${BASE_OUT}/bin"
-        LIBRARY_OUTPUT_DIRECTORY "${BASE_OUT}/bin"
-        RUNTIME_OUTPUT_DIRECTORY "${BASE_OUT}/bin"
-        OUTPUT_NAME ${TARGET_NAME}
-    )
+    
+    # Output directories (DLL → bin/, LIB → lib/)
 
     # Copy headers
     if(LIB_HEADERS)
@@ -94,7 +90,7 @@ function(build_and_export_library TARGET_NAME)
         EXPORT ${TARGET_NAME}Targets
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION bin
-        ARCHIVE DESTINATION bin
+        ARCHIVE DESTINATION lib
         INCLUDES DESTINATION include/${TARGET_NAME}
     )
 

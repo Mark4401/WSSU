@@ -1,4 +1,4 @@
-#include<WSSU/WSSU.h>
+﻿#include<WSSU/WSSU.h>
 #include <iostream>
 
 using namespace std;
@@ -9,7 +9,7 @@ int main(int argv, char* argc[])
 
     Default_Systen_info();
 
-    Init_Window(L"One", 2000, 1460, true, CENTER, DEAFULT);
+    Init_Window(L"Test_Window! ;P", 1800, 400, true, CENTER, DEAFULT);
 
     Process_Lists();
 
@@ -18,7 +18,7 @@ int main(int argv, char* argc[])
         //return true;
     };
 
-    //Retrieve_All_Active_Window_instances();
+    Retrieve_All_Active_Window_instances();
 
     return 0;
 }

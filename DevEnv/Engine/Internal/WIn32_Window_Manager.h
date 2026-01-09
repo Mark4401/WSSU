@@ -1,5 +1,5 @@
-#ifndef WIN_PROPERTIES_AND_EXAMPLES_H
-#define WIN_PROPERTIES_AND_EXAMPLES_H
+#ifndef WIN_32_WINDOW_MANAGER_H
+#define WIN_32_WINDOW_MANAGER_H
 
 #include<Runtime_variables.h>
 
@@ -15,4 +15,4 @@ void ALL_Process_Window_Lists();
 
 bool Queue();
 
-#endif // !WIN_PROPERTIES_AND_EXAMPLES_H
+#endif // !WIN_32_WINDOW_MANAGER_H

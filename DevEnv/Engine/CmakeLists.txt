@@ -40,7 +40,7 @@ set(LIBRARY_HDRS
 #------------------------------------------------------------------------#
 
 build_and_export_library(${PROJECT_NAME}
-  OUTPUT_DIR                    Engine
+  OUTPUT_DIR                    Library
   BUILD_DESTINATION_PATH        ${global_build_dir}
   VERSION                       0.3.0
   EXPORT_FLAG                   WSSU_EXPORT 

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22 FATAL_ERROR)
-project(Altera_Odyssey VERSION 0.1 LANGUAGES C CXX)
+project(Test_Application VERSION 0.1 LANGUAGES C CXX)
 
 # Add workflow Library prefix to CMAKE_PREFIX_PATH (already determined in root)
 list(APPEND CMAKE_PREFIX_PATH "${Library_Path}")
@@ -11,8 +11,8 @@ find_package(WSSU 0.3.0 REQUIRED)
 #------------------------------------------------------------------------#
 
 set(APP_SRCS    
-    "${CMAKE_CURRENT_SOURCE_DIR}/Source/C_Lang_Demo/Main_Client.c"
-    # "${CMAKE_CURRENT_SOURCE_DIR}/Source/Main_Client.cpp"
+    # "${CMAKE_CURRENT_SOURCE_DIR}/Source/C_Lang_Demo/Main_Client.c"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Source/Main_Client.cpp"
 )
 set(APP_HDRS
     ""

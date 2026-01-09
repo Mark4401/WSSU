@@ -23,7 +23,7 @@ set(external_dependencies	"${CMAKE_CURRENT_SOURCE_DIR}/Dependencies")
 #------------------------------------------------------------------------#
 
 cfg_path_type(Client_Path		"${global_build_dir}/Client")
-cfg_path_type(Library_Path		"${global_build_dir}/Engine")
+cfg_path_type(Library_Path		"${global_build_dir}/Library")
 
 
 add_subdirectory(DevEnv/App)

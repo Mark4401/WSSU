@@ -3,13 +3,13 @@
 #define BIT_LENGTH_8    0xFF
 #define BIT_LENGTH_16   0xFFFF
 
-int16_u Virtual_Key_Code = 0;
-int16_u Key_Flags = 0;
-int16_u Scan_Code = 0;
-int16_u Repeat_Count = 0;
-bool Key_extended_Data = false;
-bool Key_Pressed = false;
-bool Key_Released = false;
+int16_u		Virtual_Key_Code		= 0;
+int16_u		Key_Flags				= 0;
+int16_u		Scan_Code				= 0;
+int16_u		Repeat_Count			= 0;
+bool		Key_extended_Data		= false;
+bool		Key_Pressed				= false;
+bool		Key_Released			= false;
 
 using namespace std;
 
