@@ -7,9 +7,9 @@ int main(int argv, char* argc[])
 {
     cout << "\ncalled from an C++ file! :p\n\n";
 
-    Init_Program(DPI_AWARENESS_TRUE);
+    Init_Program(DPI_AWARENESS_FALSE);
 
-    Init_Window(L"Test_Window! ;P", 2500,1440, true, POS_TOP_LEFT);
+    Init_Window(L"Test_Window! ;P", 3100,1900, true, POS_TOP_LEFT);
     //Init_Window(L"Test_Window! ;P", 400, 1800, false, CENTER);
     //Init_Window(L"Test_Window! ;P", 400, 1800, true , CENTER);
 

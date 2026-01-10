@@ -26,7 +26,7 @@ void Init_Window(const wchar_t* title, int Width, int Height, bool Black_title_b
 
     if (!(Width <= MAX_V_WIDTH) || !(Height <= MAX_V_HEIGHT))
     {
-        cerr << "Either Width or Height workable maximums!\n";
+        cerr << "\nEither Width or Height exceeds workable maximums limit size!\n";
         exit(EXIT_FAILURE);
     }
 
