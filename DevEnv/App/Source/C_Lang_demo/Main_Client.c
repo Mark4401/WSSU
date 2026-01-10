@@ -8,7 +8,7 @@ int main(int argv, char* argc[])
 {
 	printf("DLL/LIB - Call From C! :P");
 
-    //Default_Systen_info();
+    //Enable_DPI_Awareness();
 
     //Init_Window(L"One", 2000, 1460, true, CENTER, DEAFULT);
 

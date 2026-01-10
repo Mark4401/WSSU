@@ -1,80 +1,16 @@
 #include "WIn32_Window_Manager.h"
 #include"Keyboard_Win32.h"
+#include"WSSU_Internal.h"
 #include<iostream>
 
 using namespace std;
-
-struct Window_handle_count
-{
-	int Count;
-};
-
-#define MAX_WH_LIST		10
-#define MAX_PM_COUNT	10
-
-struct WIn32_HWND_List
-{
-	HWND Active_instances[MAX_WH_LIST];
-};
-
-typedef struct WIN32_CLIENT
-{
-	int					Height;
-	int					Width;
-	Wide_Char			Title;
-	HINSTANCE			h_Current_Instance;
-	HINSTANCE			h_Previous_Instance;
-	PWSTR				p_Command_Line;
-	HWND				Client_Window_Handle;
-	bool				Currently_Running;
-	bool				Active_Black_title_Bar;
-	int					n_Command_Show;
-} WIN32_CLIENT;
-
-
-struct Physical_Monitor
-{
-	wchar_t Monitor_Name[32];
-	int PM_Present_count;
-	int PM_Width;
-	int PM_Height;
-
-	int PM_Virtual_Width;
-	int PM_Virtual_Height;
-
-	int32_u X_Dpi;
-	int32_u Y_Dpi;
-
-	float DPI_Scale;
-
-	int PM_V_Workable_Width;
-	int PM_V_Workable_Height;
-
-	HWND DEF_Monitor_handle;
-
-};
-
-struct Window_Data
-{
-	int					Process_owned_WI_count			= 0;
-	int					Window_instance_Count			= 0;
-	bool				Class_Registry					= false;
-	WIn32_HWND_List		Data							= { };
-	Physical_Monitor	Monitor							[MAX_PM_COUNT];
-};
-
-Window_Data Deafult_Window = { };
-
-WNDCLASSW DEAFULT_WINDOW_CLASS = { };
-
-Window_handle_count Data;
 
 BOOL CALLBACK
 Enum_Windows_Proc(HWND Window_handle, LPARAM LParam)
 {
 	cout << "(Window_handle) : " << Window_handle << "\n";
 
-	Data.Count++;
+	Count_Data.Count++;
 
 	return TRUE;
 };
@@ -83,7 +19,7 @@ void Top_Level_Windows()
 {
 	EnumWindows(Enum_Windows_Proc, 0);
 
-	cout << "\n(Top level Window Handle Count): " << Data.Count << "\n\n";
+	cout << "\n(Top level Window Handle Count): " << Count_Data.Count << "\n\n";
 }
 
 LRESULT CALLBACK
@@ -95,15 +31,15 @@ Default_Window_Proc(HWND Window, UINT Message, WPARAM WParam, LPARAM LParam)
 		{
 			Retrieve_Window_Destruction_By_User(Window);
 
-			Deafult_Window.Process_owned_WI_count--;
+			Global_Properties.Process_owned_WI_count--;
 
-			if (( Deafult_Window.Process_owned_WI_count) == 0)
+			if (( Global_Properties.Process_owned_WI_count) == 0)
 			{
 				cout << "\n\nActive Window list Empty! ONLY DLL handle Active\n";
 
 				PostQuitMessage(0);
 				
-				UnregisterClassW(DEAFULT_WINDOW_CLASS.lpszClassName, DEAFULT_WINDOW_CLASS.hInstance);
+				UnregisterClassW(Global_Properties.DEAFULT_WINDOW_CLASS.lpszClassName, Global_Properties.DEAFULT_WINDOW_CLASS.hInstance);
 				
 			}
 
@@ -149,16 +85,16 @@ void Black_Title_Bar(HWND Window_handle)
 	//ShowWindow(Window_handle, SW_SHOW);
 }
 
-void Set_Window_info(const wchar_t* title, int Width, int Height, bool Black_title_bar)
+void Create_Win32_Window(const wchar_t* title, int X_Pos, int Y_Pos, int Width, int Height, bool Black_title_bar)
 {
-	if (Deafult_Window.Class_Registry == false)
+	if (Global_Properties.Class_Registry == false)
 	{
-		DEAFULT_WINDOW_CLASS.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
-		DEAFULT_WINDOW_CLASS.lpfnWndProc = Default_Window_Proc;
-		DEAFULT_WINDOW_CLASS.hInstance = GetModuleHandle(nullptr);
-		DEAFULT_WINDOW_CLASS.lpszClassName = L"DEF_WINDOW_CALSS";
+		Global_Properties.DEAFULT_WINDOW_CLASS.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
+		Global_Properties.DEAFULT_WINDOW_CLASS.lpfnWndProc = Default_Window_Proc;
+		Global_Properties.DEAFULT_WINDOW_CLASS.hInstance = GetModuleHandle(nullptr);
+		Global_Properties.DEAFULT_WINDOW_CLASS.lpszClassName = L"DEF_WINDOW_CALSS";
 
-		if (!RegisterClassW(&DEAFULT_WINDOW_CLASS))
+		if (!RegisterClassW(&Global_Properties.DEAFULT_WINDOW_CLASS))
 		{
 			cout << GetLastError() << "\n";
 			cerr << "\nWindow Registration Failed!\n";
@@ -166,21 +102,21 @@ void Set_Window_info(const wchar_t* title, int Width, int Height, bool Black_tit
 		};
 	}
 	
-	Deafult_Window.Class_Registry = true;
+	Global_Properties.Class_Registry = true;
 
 	HWND DEF_Screen = CreateWindowExW
 	(
 		0,
-		DEAFULT_WINDOW_CLASS.lpszClassName,
+		Global_Properties.DEAFULT_WINDOW_CLASS.lpszClassName,
 		title,
 		WS_OVERLAPPEDWINDOW | WS_VISIBLE,
-		0,
-		0,
+		X_Pos,
+		Y_Pos,
 		Width,
 		Height,
 		NULL,
 		NULL,
-		DEAFULT_WINDOW_CLASS.hInstance,
+		Global_Properties.DEAFULT_WINDOW_CLASS.hInstance,
 		NULL
 	);
 
@@ -200,77 +136,54 @@ void Set_Window_info(const wchar_t* title, int Width, int Height, bool Black_tit
 
 	ShowWindow(DEF_Screen, SW_SHOW);
 
-	if (Deafult_Window.Window_instance_Count < MAX_WH_LIST)
+	if (Global_Properties.Window_instance_Count < MAX_WH_LIST)
 	{
-		Deafult_Window.Process_owned_WI_count++;
+		Global_Properties.Process_owned_WI_count++;
 
-		cout << "Window Index: " << Deafult_Window.Window_instance_Count << "\n";
+		cout << "Window Index: " << Global_Properties.Window_instance_Count << "\n";
 		
-		Deafult_Window.Data.Active_instances[Deafult_Window.Window_instance_Count++] = DEF_Screen;
+		Global_Properties.Data.Active_instances[Global_Properties.Window_instance_Count++] = DEF_Screen;
 
 		cout << "Window Handle: " << DEF_Screen << "\n";
 	}
 }
 
-void Retrieve_Window_Destruction_By_User(HWND Window)
+static void Retrieve_Window_Destruction_By_User(HWND Window)
 {
-	for (int I = 0; I < Deafult_Window.Window_instance_Count; I++)
+	for (int I = 0; I < Global_Properties.Window_instance_Count; I++)
 	{
-		if (Deafult_Window.Data.Active_instances[I] == Window)
+		if (Global_Properties.Data.Active_instances[I] == Window)
 		{
-			cout << "\nWindow closed by user action!\t" << "(HWND_Handle): " << Deafult_Window.Data.Active_instances[I];
+			cout << "\nWindow closed by user action!\t" << "(HWND_Handle): " << Global_Properties.Data.Active_instances[I];
 		}
 	}
 }
 
 void ALL_Process_Window_Lists()
 {
-	if (Deafult_Window.Process_owned_WI_count == 0 )
+	if (Global_Properties.Process_owned_WI_count == 0 )
 	{
 		cout << "NON Primary Window created! program will continue indefensibly without Post Code 0!" << "\n";
 
 		exit(EXIT_FAILURE);
 	}
 
-	for (int I = 0; I < Deafult_Window.Window_instance_Count; I++)
+	for (int I = 0; I < Global_Properties.Window_instance_Count; I++)
 	{
-		BOOL True_or_False = IsWindowUnicode(Deafult_Window.Data.Active_instances[I]);
-		cout << "\nWindow Index: " << I << "\t(HWND_Handle): " << Deafult_Window.Data.Active_instances[I] << "\t"
+		BOOL True_or_False = IsWindowUnicode(Global_Properties.Data.Active_instances[I]);
+		cout << "\nWindow Index: " << I << "\t(HWND_Handle): " << Global_Properties.Data.Active_instances[I] << "\t"
 			<< "(Unicode Window): " << (True_or_False ? "True" : "False");
 
 	}
+
+
 }
 
-bool Queue()
-{
-	bool Active_state = true;
-
-	MSG Message_Loop = { };
-
-	while (PeekMessageW(&Message_Loop, 0, 0, 0, PM_REMOVE))
-	{
-		if (Message_Loop.message == WM_QUIT)
-		{
-			Active_state = false;
-
-			cout << "\nWM_QUIT win32 message called!\n";
-
-			
-
-			return Active_state;
-		}
-
-		TranslateMessage(&Message_Loop);
-		DispatchMessageW(&Message_Loop);
-	}
-
-	return Active_state;
-};
 
 static BOOL
 CALLBACK Monitor_enum_Proc(HMONITOR Monitor_, HDC, LPRECT, LPARAM)
 {
-	if (Deafult_Window.Monitor->PM_Present_count >= 6)
+	if (Global_Properties.Monitor->PM_Present_count >= 6)
 	{
 		return FALSE;
 	}
@@ -287,30 +200,69 @@ CALLBACK Monitor_enum_Proc(HMONITOR Monitor_, HDC, LPRECT, LPARAM)
 
 	EnumDisplaySettingsW(Monitor_Info_Struct.szDevice, ENUM_CURRENT_SETTINGS, &_Dev_Mode_);
 
-	StringCchCopyW(Deafult_Window.Monitor->Monitor_Name, _countof(Deafult_Window.Monitor->Monitor_Name), Monitor_Info_Struct.szDevice);
+	StringCchCopyW(Global_Properties.Monitor->Monitor_Name, _countof(Global_Properties.Monitor->Monitor_Name), Monitor_Info_Struct.szDevice);
 
-	Deafult_Window.Monitor->PM_Width = _Dev_Mode_.dmPelsWidth;
-	Deafult_Window.Monitor->PM_Height = _Dev_Mode_.dmPelsHeight;
+	Global_Properties.Monitor->PM_Width = _Dev_Mode_.dmPelsWidth;
+	Global_Properties.Monitor->PM_Height = _Dev_Mode_.dmPelsHeight;
 
-	GetDpiForMonitor(Monitor_, MDT_EFFECTIVE_DPI, &Deafult_Window.Monitor->X_Dpi, &Deafult_Window.Monitor->Y_Dpi);
+	int32_u X_DPI = 96, Y_DPI = 96;
+	
+	GetDpiForMonitor(Monitor_, MDT_EFFECTIVE_DPI, &X_DPI, &Y_DPI);
 
-	Deafult_Window.Monitor->DPI_Scale = Deafult_Window.Monitor->X_Dpi / 96.0f;
+	Global_Properties.Monitor->X_Dpi = X_DPI;
+	Global_Properties.Monitor->Y_Dpi = Y_DPI;
 
-	Deafult_Window.Monitor->PM_Virtual_Height = Deafult_Window.Monitor->PM_Height / Deafult_Window.Monitor->DPI_Scale;
-	Deafult_Window.Monitor->PM_Virtual_Width = Deafult_Window.Monitor->PM_Width / Deafult_Window.Monitor->DPI_Scale;
+	Global_Properties.Monitor->DPI_Scale = (float)Global_Properties.Monitor->X_Dpi / 96.0f;
 
-	int PM_V_Temp_Workable_Width_Region = Monitor_Info_Struct.rcWork.right - Monitor_Info_Struct.rcWork.left;
-	int PM_V_Temp_Workable_Height_Region = Monitor_Info_Struct.rcWork.bottom - Monitor_Info_Struct.rcWork.top;
+	Global_Properties.Monitor->PM_Workable_Width = Monitor_Info_Struct.rcMonitor.right - Monitor_Info_Struct.rcMonitor.left;
+	Global_Properties.Monitor->PM_Workable_Height = Monitor_Info_Struct.rcMonitor.bottom - Monitor_Info_Struct.rcMonitor.top;
 
-	Deafult_Window.Monitor->PM_V_Workable_Height = PM_V_Temp_Workable_Height_Region / Deafult_Window.Monitor->DPI_Scale;
-	Deafult_Window.Monitor->PM_V_Workable_Width = PM_V_Temp_Workable_Width_Region / Deafult_Window.Monitor->DPI_Scale;
+	int Workable_Width_Region = Monitor_Info_Struct.rcWork.right - Monitor_Info_Struct.rcWork.left;
+	int Workable_Height_Region = Monitor_Info_Struct.rcWork.bottom - Monitor_Info_Struct.rcWork.top;
 
-	Deafult_Window.Monitor->PM_Present_count++;
+	if (Global_Properties.Monitor->DPI_Awareness_Status == true)
+	{
+		Global_Properties.Monitor->PM_Virtual_Width = Global_Properties.Monitor->PM_Width;
+		Global_Properties.Monitor->PM_Virtual_Height = Global_Properties.Monitor->PM_Height;
+
+		Global_Properties.Monitor->PM_V_Workable_Width = Workable_Width_Region;
+		Global_Properties.Monitor->PM_V_Workable_Height = Workable_Height_Region;
+
+		Global_Properties.Monitor->PM_Present_count++;
+	}
+	else
+	{
+		Global_Properties.Monitor->PM_Virtual_Width = Global_Properties.Monitor->PM_Width / Global_Properties.Monitor->DPI_Scale;
+		Global_Properties.Monitor->PM_Virtual_Height = Global_Properties.Monitor->PM_Height / Global_Properties.Monitor->DPI_Scale;
+
+		Global_Properties.Monitor->PM_V_Workable_Width = Workable_Width_Region / Global_Properties.Monitor->DPI_Scale;
+		Global_Properties.Monitor->PM_V_Workable_Height = Workable_Height_Region / Global_Properties.Monitor->DPI_Scale;
+
+		Global_Properties.Monitor->PM_Present_count++;
+	}
 
 	return TRUE;
 };
 
-void Physical_Display_Properties()
+/*
+// Physical monitor bounds (raw pixels)
+Global_Properties.Monitor->PM_Physical_Max_Width =
+	Monitor_Info_Struct.rcMonitor.right - Monitor_Info_Struct.rcMonitor.left;
+
+Global_Properties.Monitor->PM_Physical_Max_Height =
+	Monitor_Info_Struct.rcMonitor.bottom - Monitor_Info_Struct.rcMonitor.top;
+
+// Physical workable area (raw pixels)
+Global_Properties.Monitor->PM_Physical_Workable_Width =
+	Monitor_Info_Struct.rcWork.right - Monitor_Info_Struct.rcWork.left;
+
+Global_Properties.Monitor->PM_Physical_Workable_Height =
+	Monitor_Info_Struct.rcWork.bottom - Monitor_Info_Struct.rcWork.top;
+
+*/
+
+
+void Display_DPI_Properties(bool state)
 {	
 	/*
 		Returns either  1 or 0 i.e. (TRUE or DALSE)
@@ -322,28 +274,35 @@ void Physical_Display_Properties()
 			- the Program has Access ONLY to the virtual Monitor/Display Properties 
 				- And will remain unaware of Hardware Resolution. Always Thinking the Scale is set to 100% 
 	*/
-	BOOL DPI_Active_Awareness_Context_State = SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
+
+	if (!state == true )
+	{
+		cout << "\n(DPI_Active_Awareness_Context_State):  OFF" << "\n\n";
+	} 
+	else 
+	{
+		SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
+		
+		cout << "\n(DPI_Active_Awareness_Context_State):  ACTIVE" << "\n\n";
+	}
 	
-	if (DPI_Active_Awareness_Context_State == true) (cout << "\n(DPI_Active_Awareness_Context_State):  ACTIVE" << "\n\n");
-	if (DPI_Active_Awareness_Context_State == false) (cout << "\n(DPI_Active_Awareness_Context_State):  OFF"<< "\n\n");
-	//HWND DEF_handle =  GetWindow(GetDesktopWindow(), GW_HWNDFIRST);
 
 	// DEF stands for Default; DEF is just my own short hand definition.
 	
-	Deafult_Window.Monitor->DEF_Monitor_handle = GetDesktopWindow();
+	Global_Properties.Monitor->DEF_Monitor_handle = GetDesktopWindow();
 
-	Deafult_Window.Data.Active_instances[Deafult_Window.Window_instance_Count++] = Deafult_Window.Monitor->DEF_Monitor_handle;
+	Global_Properties.Data.Active_instances[Global_Properties.Window_instance_Count++] = Global_Properties.Monitor->DEF_Monitor_handle;
 
 	// WIll stop GetWindowRect from complaining of retying 
-	if (!Deafult_Window.Monitor->DEF_Monitor_handle) { cerr << GetLastError() << "\n"; return; };
+	if (!Global_Properties.Monitor->DEF_Monitor_handle) { cerr << GetLastError() << "\n"; return; };
 
-	cout << "(MEMORY ADDRS) of DEF: " << Deafult_Window.Monitor->DEF_Monitor_handle << "\n\n";
+	cout << "(MEMORY ADDRS) of DEF: " << Global_Properties.Monitor->DEF_Monitor_handle << "\n\n";
 
 	RECT DEF_Handle_Dimensions;
 
 
 	//GetClientRect(DEF_handle, &DEF_Handle_Dimensions);
-	if (!GetWindowRect(Deafult_Window.Monitor->DEF_Monitor_handle, &DEF_Handle_Dimensions)) { cerr << GetLastError() << "\n"; return; };
+	if (!GetWindowRect(Global_Properties.Monitor->DEF_Monitor_handle, &DEF_Handle_Dimensions)) { cerr << GetLastError() << "\n"; return; };
 
 	cout << "Primary Physical Display Properties:\n\n";
 	cout << "DEF (LEFT): " << DEF_Handle_Dimensions.left << "\t" << "DEF (RIGHT): " << DEF_Handle_Dimensions.right << "\n"
@@ -358,14 +317,16 @@ void Physical_Display_Properties()
 
 	EnumDisplayMonitors(nullptr, nullptr, Monitor_enum_Proc, 0);
 
-	for (int I = 0; I < Deafult_Window.Monitor->PM_Present_count; I++)
+	for (int I = 0; I < Global_Properties.Monitor->PM_Present_count; I++)
 	{
-		const Physical_Monitor& PM_List = Deafult_Window.Monitor[I];
+		const Physical_Monitor& PM_List = Global_Properties.Monitor[I];
 
 		wcout << L"Monitor: " << PM_List.Monitor_Name << "\n";
 		
 		wcout << L"Physical Resolution: " 
 			<< PM_List.PM_Width << L"x" << PM_List.PM_Height << "\n";
+		wcout << L"Workable Physical Resolution" << ": "
+			<< PM_List.PM_Workable_Width << L"x" << PM_List.PM_Workable_Height << "\n";
 		wcout << L"DPI: " << PM_List.X_Dpi << "\n";
 		wcout << L"DPI Scale factor: " << (PM_List.DPI_Scale * 100.0f) << "\n";
 		wcout << L"Virtual Resolution: " << PM_List.PM_Virtual_Width << L"x" << PM_List.PM_Virtual_Height << "\n";

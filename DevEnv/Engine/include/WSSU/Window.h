@@ -37,18 +37,9 @@ extern "C" {
         POS_BOTTOM_RIGHT
     };
 
-    enum Window_Type
-    {
-        DEAFULT,
-        POP_UP,
-        BODERLESS
-    };
-
-    WSSU_API void Default_Systen_info();
-
     WSSU_API void Retrieve_All_Active_Window_instances();
 
-    WSSU_API void Init_Window(const wchar_t* title, int Width, int Height, bool Black_title_bar, enum Window_Position Position, enum Window_Type Type);
+    WSSU_API void Init_Window(const wchar_t* title, int Width, int Height, bool Black_title_bar, enum Window_Position Position);
 
     WSSU_API void Process_Lists();
 

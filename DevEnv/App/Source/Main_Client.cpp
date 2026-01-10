@@ -7,9 +7,11 @@ int main(int argv, char* argc[])
 {
     cout << "\ncalled from an C++ file! :p\n\n";
 
-    Default_Systen_info();
+    Init_Program(DPI_AWARENESS_TRUE);
 
-    Init_Window(L"Test_Window! ;P", 1800, 400, true, CENTER, DEAFULT);
+    Init_Window(L"Test_Window! ;P", 2500,1440, true, POS_TOP_LEFT);
+    //Init_Window(L"Test_Window! ;P", 400, 1800, false, CENTER);
+    //Init_Window(L"Test_Window! ;P", 400, 1800, true , CENTER);
 
     Process_Lists();
 
@@ -18,7 +20,7 @@ int main(int argv, char* argc[])
         //return true;
     };
 
-    Retrieve_All_Active_Window_instances();
+    //Retrieve_All_Active_Window_instances();
 
     return 0;
 }
