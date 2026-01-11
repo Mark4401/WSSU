@@ -4,7 +4,7 @@ project(Test_Application VERSION 0.1 LANGUAGES C CXX)
 # Add workflow Library prefix to CMAKE_PREFIX_PATH (already determined in root)
 list(APPEND CMAKE_PREFIX_PATH "${Library_Path}")
 
-find_package(WSSU 0.3.0 REQUIRED)
+find_package(WSML 0.3.2 REQUIRED)
 
 #------------------------------------------------------------------------#
 # Project Shortcut-variables
@@ -42,7 +42,7 @@ App_builder(${PROJECT_NAME}
     PUBLIC_INCLUDES                     "${CMAKE_CURRENT_SOURCE_DIR}/Include"
     PRIVATE_INCLUDES                    "${CMAKE_CURRENT_SOURCE_DIR}/Internal"
     
-    LINK_LIBS                           ws2_32 WSSU::WSSU
+    LINK_LIBS                           ws2_32 WSML::WSML
 )
 
 #------------------------------------------------------------------------#

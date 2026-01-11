@@ -1,5 +1,5 @@
-#ifndef WSSU_INTERNAL_H
-#define WSSU_INTERNAL_H
+#ifndef WSML_INTERNAL_H
+#define WSML_INTERNAL_H
 
 #include<Runtime_variables.h>
 
@@ -39,7 +39,7 @@ struct Physical_Monitor
 
 	HWND DEF_Monitor_handle;
 
-	bool DPI_Awareness_Status = false;
+	bool DPI_Awareness_Status;
 
 };
 
@@ -59,4 +59,4 @@ extern Window_handle_count			Count_Data;
 
 
 
-#endif // !WSSU_INTERNAL_H
+#endif // !WSML_INTERNAL_H

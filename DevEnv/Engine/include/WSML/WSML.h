@@ -1,5 +1,5 @@
-#ifndef WSSU_H
-#define WSSU_H
+#ifndef WSML_H
+#define WSML_H
 
 #include<stdint.h>
 
@@ -17,18 +17,18 @@ typedef uint64_t int64_u;
 
 
 #ifdef _WIN32
-#ifdef WSSU_EXPORT
-#define WSSU_API __declspec(dllexport)
+#ifdef WSML_EXPORT
+#define WSML_API __declspec(dllexport)
 #else
-#define WSSU_API __declspec(dllimport)
+#define WSML_API __declspec(dllimport)
 #endif
 #else
-#define WSSU_API
+#define WSML_API
 #endif
 
-#include<WSSU/Window.h>
-#include<WSSU/Keyboard.h>
-#include<WSSU/Pulse.h>
+#include<WSML/Window.h>
+#include<WSML/Keyboard.h>
+#include<WSML/Pulse.h>
 
 
-#endif // WSSU_H
+#endif // WSML_H

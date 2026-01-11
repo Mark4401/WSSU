@@ -1,7 +1,6 @@
 #ifndef WINDOW_H
 #define WINDOW_H
-
-#include<WSSU/WSSU.h>
+#include<WSML/WSML.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -37,11 +36,16 @@ extern "C" {
         POS_BOTTOM_RIGHT
     };
 
-    WSSU_API void Retrieve_All_Active_Window_instances();
+    
+    
+    
+    
+    
+    WSML_API void Retrieve_All_Active_Window_instances();
 
-    WSSU_API void Init_Window(const wchar_t* title, int Width, int Height, bool Black_title_bar, enum Window_Position Position);
+    WSML_API void Init_Window(const wchar_t* title, int Width, int Height, bool Black_title_bar, enum Window_Position Position);
 
-    WSSU_API void Process_Lists();
+    WSML_API void Process_Lists();
 
 #ifdef __cplusplus
 } // extern "C"

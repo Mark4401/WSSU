@@ -1,7 +1,7 @@
 #ifndef PULSE_H
 #define PULSE_H
 
-#include<WSSU/WSSU.h>
+#include<WSML/WSML.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -13,9 +13,9 @@ extern "C" {
 		DPI_AWARENESS_FALSE
 	};
 
-	WSSU_API void Init_Program(enum Start_Up_Properties Option);
+	WSML_API void Init_Program(enum Start_Up_Properties Option);
 
-	WSSU_API bool System_Queue();
+	WSML_API bool System_Queue();
 
 #ifdef __cplusplus
 } // extern "C"

@@ -1,5 +1,5 @@
 ﻿cmake_minimum_required(VERSION 3.22 FATAL_ERROR)
-project(WSSU VERSION 0.3 LANGUAGES C CXX)
+project(WSML VERSION 0.3 LANGUAGES C CXX)
 
 set(CMAKE_C_STANDARD 20)
 set(CMAKE_C_STANDARD_REQUIRED ON)
@@ -14,21 +14,21 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 #------------------------------------------------------------------------#
 
 set(LIBRARY_SRCS
-    "${CMAKE_CURRENT_SOURCE_DIR}/Source/WSSU.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Source/WSML.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Source/Runtime_variables.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Source/WIn32_Window_Manager.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Source/Keyboard_Win32.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Source/Keyboard.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Source/Window.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Source/Pulse.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Source/WSSU_Internal.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Source/WSML_Internal.cpp"
 )
 
 set(LIBRARY_HDRS
-    "${CMAKE_CURRENT_SOURCE_DIR}/Include/WSSU/WSSU.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Include/WSSU/Window.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Include/WSSU/Keyboard.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Include/WSSU/Pulse.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Include/WSML/WSML.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Include/WSML/Window.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Include/WSML/Keyboard.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Include/WSML/Pulse.h"
 )
 
 #------------------------------------------------------------------------#
@@ -43,8 +43,8 @@ set(LIBRARY_HDRS
 build_and_export_library(${PROJECT_NAME}
   OUTPUT_DIR                    Library
   BUILD_DESTINATION_PATH        ${global_build_dir}
-  VERSION                       0.3.0
-  EXPORT_FLAG                   WSSU_EXPORT 
+  VERSION                       0.3.2
+  EXPORT_FLAG                   WSML_EXPORT 
   SOURCES                       ${LIBRARY_SRCS}
   HEADERS                       ${LIBRARY_HDRS}
   LINK_LIBS                     d3d11 dxgi d3dcompiler dwmapi shcore

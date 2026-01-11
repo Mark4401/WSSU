@@ -1,7 +1,7 @@
-#include "WSSU/Window.h"
+#include "WSML/Window.h"
 #include"Runtime_variables.h"
 #include"WIn32_Window_Manager.h"
-#include"WSSU_Internal.h"
+#include"WSML_Internal.h"
 
 using namespace std;
 

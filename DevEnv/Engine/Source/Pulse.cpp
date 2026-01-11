@@ -1,5 +1,5 @@
-#include"WSSU/Pulse.h"
-#include"WSSU_Internal.h"
+#include"WSML/Pulse.h"
+#include"WSML_Internal.h"
 #include"WIn32_Window_Manager.h"
 
 using namespace std;
