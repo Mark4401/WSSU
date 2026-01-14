@@ -35,10 +35,6 @@ extern "C" {
         POS_BOTTOM_CENTER,
         POS_BOTTOM_RIGHT
     };
-
-    
-    
-    
     
     
     WSML_API void Retrieve_All_Active_Window_instances();

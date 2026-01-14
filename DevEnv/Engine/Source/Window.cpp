@@ -11,7 +11,7 @@ void Retrieve_All_Active_Window_instances()
     Top_Level_Windows();
 }
 
-void Init_Window(const wchar_t* title, int Width, int Height, bool Black_title_bar, Window_Position Position)
+void Init_Window(const wchar_t* title, int Width, int Height, bool Black_title_bar, enum Window_Position Position)
 {
     int X = 0, Y = 0;
 
