@@ -21,9 +21,17 @@ void Init_Window(const wchar_t* title, int Width, int Height, bool Black_title_b
     int MAX_V_WIDTH = Global_Properties.Monitor->PM_V_Workable_Width;
     int MAX_V_HEIGHT = Global_Properties.Monitor->PM_V_Workable_Height;
 
-    if (!(Width <= MAX_V_WIDTH) || !(Height <= MAX_V_HEIGHT))
+    if (!(Width <= MAX_V_WIDTH) || !(Height <= MAX_V_HEIGHT) || (P_Protical.Program_initialized_Code == PROG_INIT_FAILURE))
     {
-        cerr << "\nEither Width or Height exceeds workable maximum limit size!\n";
+        if (P_Protical.Program_initialized_Code == PROG_INIT_FAILURE)
+        {
+            cerr << "\nInit_Program() failed to called!\n";
+
+            exit(EXIT_FAILURE);
+        }
+        
+        cerr << "\nEither The Width or Height exceeds workable maximum limit size!\n";
+
         exit(EXIT_FAILURE);
     }
 
@@ -115,10 +123,17 @@ void Init_Window(const wchar_t* title, int Width, int Height, bool Black_title_b
 
 void Extend_Outer_Window_Borders(int Top, int Bottom, int Left, int Right)
 {
+    if (!DWM_Edges.DWM_Edit_Mode == true)
+    {
+        cerr << "\nDWM has not be enabled!\nExtend_Outer_Window_Borders() function can't be used.\nRemove-it or enable DWM edit.\n";
+        exit(EXIT_FAILURE);
+    }
     DWM_Edges.Left = Left;
     DWM_Edges.Right = Right;
     DWM_Edges.Top = Top;
     DWM_Edges.Bottom = Bottom;
+
+    cout << "\n\nDWM Enabled!\n";
 }
 
 
@@ -126,5 +141,26 @@ void Extend_Outer_Window_Borders(int Top, int Bottom, int Left, int Right)
 void Process_Lists()
 {
     ALL_Process_Window_Lists();
+}
+
+void* Return_Window_Adress(const wchar_t* Window_title)
+{
+    int Index = 0;
+
+    for (int I = 0; I < MAX_WH_LIST; I++)
+    {
+        WCHAR name[256];
+
+        GetWindowTextW(Global_Properties.Data.Active_instances[I], name, MAX_CHAR_LENGHT);
+
+        if (wcscmp(name, Window_title) == 0)
+        {
+            Index = I;
+            
+            break;
+        }
+    }
+
+    return (void*)Global_Properties.Data.Active_instances[Index];
 }
 

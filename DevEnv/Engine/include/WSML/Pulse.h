@@ -13,7 +13,13 @@ extern "C" {
 		DPI_AWARENESS_FALSE
 	};
 
-	WSML_API void Init_Program(enum Start_Up_Properties Option);
+	enum DWM
+	{
+		ENABLE_DWM_EDIT,
+		DISABLE_DWM_EDIT
+	};
+
+	WSML_API void Init_Program(enum Start_Up_Properties Option, enum DWM Edit_Option);
 
 	WSML_API bool System_Queue();
 
