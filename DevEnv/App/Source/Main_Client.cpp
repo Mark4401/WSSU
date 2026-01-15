@@ -12,7 +12,7 @@ int main(int argv, char* argc[])
     Init_Window(L"Test_Window! ;P | WSML i.e (WIndowing & State Management Library)",
         1920, 1080, true, CENTER);  
     
-    //Process_Lists();
+    Process_Lists();
 
     while(System_Queue())
     {

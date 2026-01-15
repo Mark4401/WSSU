@@ -63,7 +63,7 @@ typedef const wchar_t* Wide_Char;
 
 */
 
-#include<Windows.h>
+#include<Windowsx.h>
 #include <dwmapi.h>
 #include <d3d11.h>         // Main Direct3D 11 API
 #include <dxgi.h>          // DXGI (swap chain, adapters)
@@ -71,15 +71,21 @@ typedef const wchar_t* Wide_Char;
 #include <DirectXMath.h>  // Optional, but handy for math
 #include <shellscalingapi.h> 
 #include <strsafe.h>
+#include<uxtheme.h>
+#include<wingdi.h>
 
 #pragma comment(lib, "Shcore.lib")
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "dxgi.lib")
 #pragma comment(lib, "d3dcompiler.lib")
 #pragma comment(lib, "dwmapi.lib")
+#pragma comment(lib, "UxTheme.lib")
+
 
 #include<iostream>
 #include<String>
+
+
 
 
 // Enable Unicode for Win32 API

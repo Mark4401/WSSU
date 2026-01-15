@@ -18,6 +18,7 @@ set(LIBRARY_SRCS
     "${CMAKE_CURRENT_SOURCE_DIR}/Source/Runtime_variables.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Source/WIn32_Window_Manager.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Source/Keyboard_Win32.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Source/DWM_Examples.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Source/Keyboard.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Source/Window.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Source/Pulse.cpp"
@@ -47,7 +48,7 @@ build_and_export_library(${PROJECT_NAME}
   EXPORT_FLAG                   WSML_EXPORT 
   SOURCES                       ${LIBRARY_SRCS}
   HEADERS                       ${LIBRARY_HDRS}
-  LINK_LIBS                     d3d11 dxgi d3dcompiler dwmapi shcore
+  LINK_LIBS                     d3d11 dxgi d3dcompiler dwmapi shcore uxtheme
   PUBLIC_INCLUDES               ${CMAKE_CURRENT_SOURCE_DIR}/Include
   PRIVATE_INCLUDES              ${CMAKE_CURRENT_SOURCE_DIR}/Internal
 )

@@ -1,7 +1,7 @@
 #include "WIn32_Window_Manager.h"
 #include"Keyboard_Win32.h"
 #include"WSML_Internal.h"
-#include<iostream>
+#include"test_or_examples/DWM_Examples.h"
 
 using namespace std;
 
@@ -22,9 +22,15 @@ void Top_Level_Windows()
 	cout << "\n(Top level Window Handle Count): " << Count_Data.Count << "\n\n";
 }
 
+/***************************************************************************************/
+/***********   Window Enumeration & Procedures | Above ONLY!   *************************/
+/***************************************************************************************/
+
 LRESULT CALLBACK
 Default_Window_Proc(HWND Window, UINT Message, WPARAM WParam, LPARAM LParam)
 {
+	DWM_Exmaple_1(Window, Message, WParam, LParam);
+	
 	switch (Message)
 	{
 		case WM_DESTROY:
@@ -33,14 +39,14 @@ Default_Window_Proc(HWND Window, UINT Message, WPARAM WParam, LPARAM LParam)
 
 			Global_Properties.Process_owned_WI_count--;
 
-			if (( Global_Properties.Process_owned_WI_count) == 0)
+			if ((Global_Properties.Process_owned_WI_count) == 0)
 			{
 				cout << "\n\nActive Window list Empty! ONLY DLL handle Active\n";
 
 				PostQuitMessage(0);
-				
+
 				UnregisterClassW(Global_Properties.DEAFULT_WINDOW_CLASS.lpszClassName, Global_Properties.DEAFULT_WINDOW_CLASS.hInstance);
-				
+
 			}
 
 			return 0;
@@ -71,6 +77,7 @@ Default_Window_Proc(HWND Window, UINT Message, WPARAM WParam, LPARAM LParam)
 			EndPaint(Window, &ps);
 		}
 	}
+
 	return DefWindowProcW(Window, Message, WParam, LParam);
 };
 
