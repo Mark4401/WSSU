@@ -113,6 +113,14 @@ void Init_Window(const wchar_t* title, int Width, int Height, bool Black_title_b
     }
 }
 
+void Extend_Outer_Window_Borders(int Top, int Bottom, int Left, int Right)
+{
+    DWM_Edges.Left = Left;
+    DWM_Edges.Right = Right;
+    DWM_Edges.Top = Top;
+    DWM_Edges.Bottom = Bottom;
+}
+
 
 
 void Process_Lists()

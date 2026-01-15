@@ -40,6 +40,15 @@ struct Physical_Monitor
 
 };
 
+struct Outer_Borders
+{
+	int Top;
+	int Bottom;
+	int Left;
+	int Right;
+};
+
+
 struct Program_Deafult_Properties
 {
 	WNDCLASSW			DEAFULT_WINDOW_CLASS;
@@ -54,6 +63,6 @@ extern Program_Deafult_Properties	Global_Properties;
 
 extern Window_handle_count			Count_Data;
 
-
+extern Outer_Borders				DWM_Edges;
 
 #endif // !WSML_INTERNAL_H

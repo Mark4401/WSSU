@@ -1,8 +1,33 @@
 #include "test_or_examples/DWM_Examples.h"
+#include "WSML_Internal.h"
 
 using namespace std;
 
-int LEFTEXTENDWIDTH = 8, RIGHTEXTENDWIDTH = 8, BOTTOMEXTENDWIDTH = 50, TOPEXTENDWIDTH = 40, BIT_COUNT = 32, TMT_CAPTIONFONT = 802;
+// Works for now.
+
+static int LEFTEXTENDWIDTH(void)
+{
+	return DWM_Edges.Left;
+}
+
+int static RIGHTEXTENDWIDTH(void)
+{
+	return DWM_Edges.Right;
+}
+
+int static BOTTOMEXTENDWIDTH(void)
+{
+	return DWM_Edges.Bottom;
+}
+
+int static TOPEXTENDWIDTH(void)
+{
+	return DWM_Edges.Top;
+}
+
+int BIT_COUNT = 32, TMT_CAPTIONFONT = 802;
+
+//cout << DWM_Specs_Defined_By_User.left << "\n";
 
 // Hit test the frame for resizing and moving.
 static LRESULT HitTestNCA(HWND hWnd, WPARAM wParam, LPARAM lParam)
@@ -24,22 +49,22 @@ static LRESULT HitTestNCA(HWND hWnd, WPARAM wParam, LPARAM lParam)
 	bool fOnResizeBorder = false;
 
 	// Determine if the point is at the top or bottom of the window.
-	if (ptMouse.y >= rcWindow.top && ptMouse.y < rcWindow.top + TOPEXTENDWIDTH)
+	if (ptMouse.y >= rcWindow.top && ptMouse.y < rcWindow.top + TOPEXTENDWIDTH())
 	{
 		fOnResizeBorder = (ptMouse.y < (rcWindow.top - rcFrame.top));
 		uRow = 0;
 	}
-	else if (ptMouse.y < rcWindow.bottom && ptMouse.y >= rcWindow.bottom - BOTTOMEXTENDWIDTH)
+	else if (ptMouse.y < rcWindow.bottom && ptMouse.y >= rcWindow.bottom - BOTTOMEXTENDWIDTH())
 	{
 		uRow = 2;
 	}
 
 	// Determine if the point is at the left or right of the window.
-	if (ptMouse.x >= rcWindow.left && ptMouse.x < rcWindow.left + LEFTEXTENDWIDTH)
+	if (ptMouse.x >= rcWindow.left && ptMouse.x < rcWindow.left + LEFTEXTENDWIDTH())
 	{
 		uCol = 0; // left side
 	}
-	else if (ptMouse.x < rcWindow.right && ptMouse.x >= rcWindow.right - RIGHTEXTENDWIDTH)
+	else if (ptMouse.x < rcWindow.right && ptMouse.x >= rcWindow.right - RIGHTEXTENDWIDTH())
 	{
 		uCol = 2; // right side
 	}
@@ -166,10 +191,10 @@ static LRESULT Custom_Caption_Proc_1(HWND Window, UINT Message, WPARAM WParam, L
 		{
 			MARGINS Dwm_marggins;
 
-			Dwm_marggins.cxLeftWidth = LEFTEXTENDWIDTH;      // 8
-			Dwm_marggins.cxRightWidth = RIGHTEXTENDWIDTH;    // 8
-			Dwm_marggins.cyBottomHeight = BOTTOMEXTENDWIDTH; // 20
-			Dwm_marggins.cyTopHeight = TOPEXTENDWIDTH;       // 27
+			Dwm_marggins.cxLeftWidth = LEFTEXTENDWIDTH();      // 8
+			Dwm_marggins.cxRightWidth = RIGHTEXTENDWIDTH();    // 8
+			Dwm_marggins.cyBottomHeight = BOTTOMEXTENDWIDTH(); // 20
+			Dwm_marggins.cyTopHeight = TOPEXTENDWIDTH();       // 27
 
 			H_Result = DwmExtendFrameIntoClientArea(Window, &Dwm_marggins);
 

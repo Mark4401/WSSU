@@ -40,6 +40,8 @@ extern "C" {
     WSML_API void Retrieve_All_Active_Window_instances();
 
     WSML_API void Init_Window(const wchar_t* title, int Width, int Height, bool Black_title_bar, enum Window_Position Position);
+    
+    WSML_API void Extend_Outer_Window_Borders(int Top, int Bottom, int Left, int Right);
 
     WSML_API void Process_Lists();
 

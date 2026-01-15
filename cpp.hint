@@ -7,3 +7,6 @@
 #define WSSU_API __declspec(dllexport)
 #define WSSU_API __declspec(dllimport)
 #define WSSU_API
+#define WSML_API __declspec(dllexport)
+#define WSML_API __declspec(dllimport)
+#define WSML_API
