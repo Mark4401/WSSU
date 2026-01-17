@@ -22,6 +22,7 @@ set(LIBRARY_SRCS
     "${CMAKE_CURRENT_SOURCE_DIR}/Source/Keyboard.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Source/Window.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Source/Pulse.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Source/Win32_Time_Manager.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Source/WSML_Internal.cpp"
 )
 

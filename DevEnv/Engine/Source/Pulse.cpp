@@ -1,6 +1,7 @@
 #include"WSML/Pulse.h"
 #include"WSML_Internal.h"
 #include"WIn32_Window_Manager.h"
+#include"Win32_Time_Manager.h"
 //#include"test_or_examples/DWM_Examples.h"
 
 using namespace std;
@@ -53,7 +54,7 @@ bool System_Queue()
 
 	MSG Message_Loop = { };
 
-	while (PeekMessageW(&Message_Loop, 0, 0, 0, PM_REMOVE))
+	while (PeekMessageW(&Message_Loop, NULL, 0, 0, PM_REMOVE))
 	{
 		if (Message_Loop.message == WM_QUIT)
 		{

@@ -17,5 +17,6 @@ static void Retrieve_Window_Destruction_By_User(HWND WIndow);
 
 void ALL_Process_Window_Lists();
 
+void Forground_Window();
 
 #endif // !WIN_32_WINDOW_MANAGER_H

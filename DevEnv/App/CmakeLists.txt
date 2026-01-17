@@ -13,8 +13,10 @@ find_package(WSML 0.3.2 REQUIRED)
 set(APP_SRCS    
     # "${CMAKE_CURRENT_SOURCE_DIR}/Source/C_Lang_Demo/Main_Client.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/Source/Main_Client.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Source/Demos/DWM_Examples_demo.cpp"
 )
 set(APP_HDRS
+    "${CMAKE_CURRENT_SOURCE_DIR}/Include/DWM_Examples_demo.h"
     ""
 )
 

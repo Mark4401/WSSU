@@ -53,7 +53,6 @@ extern "C" {
     
     WSML_API void* Return_Window_Adress(const wchar_t* Window_title);
 
-
 #ifdef __cplusplus
 } // extern "C"
 #endif

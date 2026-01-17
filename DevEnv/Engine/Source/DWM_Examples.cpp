@@ -80,7 +80,7 @@ static LRESULT HitTestNCA(HWND hWnd, WPARAM wParam, LPARAM lParam)
 	return hitTests[uRow][uCol];
 }
 // Paint the title on the custom frame.
-void PaintCustomCaption(HWND hWnd, HDC hdc)
+static void PaintCustomCaption(HWND hWnd, HDC hdc)
 {
 	RECT rcClient;
 	GetClientRect(hWnd, &rcClient);
@@ -107,7 +107,7 @@ void PaintCustomCaption(HWND hWnd, HDC hdc)
 			dib.bmiHeader.biBitCount = BIT_COUNT;
 			dib.bmiHeader.biCompression = BI_RGB;
 
-			HBITMAP hbm = CreateDIBSection(hdc, &dib, DIB_RGB_COLORS, NULL, NULL, NULL);
+			HBITMAP hbm = CreateDIBSection(hdc, &dib, DIB_RGB_COLORS, 0L, NULL, NULL);
 			if (hbm)
 			{
 				HBITMAP hbmOld = (HBITMAP)SelectObject(hdcPaint, hbm);

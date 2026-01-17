@@ -119,6 +119,7 @@ void Init_Window(const wchar_t* title, int Width, int Height, bool Black_title_b
         default:
             break;
     }
+    //Forground_Window();
 }
 
 void Extend_Outer_Window_Borders(int Top, int Bottom, int Left, int Right)
@@ -163,4 +164,3 @@ void* Return_Window_Adress(const wchar_t* Window_title)
 
     return (void*)Global_Properties.Data.Active_instances[Index];
 }
-
