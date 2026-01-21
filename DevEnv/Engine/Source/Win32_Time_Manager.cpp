@@ -1,4 +1,3 @@
-#include"Runtime_variables.h"
 #include "Win32_Time_Manager.h"
 
 

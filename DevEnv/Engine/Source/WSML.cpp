@@ -6,3 +6,9 @@ void Cuda_call_from_lib()
 {
 	library_Cuda_demo();
 }
+
+void cuda_test_func()
+{
+	Test_CU();
+}
+

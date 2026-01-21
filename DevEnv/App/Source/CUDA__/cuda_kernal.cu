@@ -1,6 +1,7 @@
 #include <cstdio>
-#include <cuda_runtime.h>
+#include <cuda_runtime_api.h>
 #include <chrono>
+#include <device_launch_parameters.h>
 
 #define THREADS 256
 #define BLOCKS 256
@@ -23,7 +24,7 @@ __global__ void bbp_pi_kernel(double* output, int start_k) {
 extern "C" void CUDA_demo() {
     const int total_threads = THREADS * BLOCKS;
     double* d_output;
-    cudaMalloc(&d_output, total_threads * sizeof(double));
+    cudaMalloc((void**)& d_output, total_threads * sizeof(double));
 
     auto start = std::chrono::high_resolution_clock::now();
     const auto duration = std::chrono::minutes(2);
@@ -50,5 +51,5 @@ extern "C" void CUDA_demo() {
     }
 
     cudaFree(d_output);
-    printf("Done. APP CALL\n");
+    printf("Done. APP CALL!\n");
 }

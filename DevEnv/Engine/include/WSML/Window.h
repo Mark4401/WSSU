@@ -6,21 +6,6 @@
 extern "C" {
 #endif
 
-    /*
-
-        - LEGACY STRUCTS
-        - REFERENCE USE ONLY!
-
-    struct	CLIENT
-    {
-        int                 Width;
-        int                 Height;
-        const wchar_t*      Title;
-        bool                Active_black_title_bar;
-    };
-
-    */
-
     enum Window_Position
     {
         POS_TOP_LEFT,

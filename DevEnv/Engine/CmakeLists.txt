@@ -1,5 +1,5 @@
 ﻿cmake_minimum_required(VERSION 3.22 FATAL_ERROR)
-project(WSML VERSION 0.3 LANGUAGES C CXX CUDA)
+project(WSML VERSION 0.4 LANGUAGES C CXX CUDA)
 
 set(CMAKE_C_STANDARD 20)
 set(CMAKE_C_STANDARD_REQUIRED ON)
@@ -49,7 +49,7 @@ set(CUDA_FILES
 build_and_export_library(${PROJECT_NAME}
   OUTPUT_DIR                    Library
   BUILD_DESTINATION_PATH        ${global_build_dir}
-  VERSION                       0.3.2
+  VERSION                       0.4.0
   EXPORT_FLAG                   WSML_EXPORT 
   SOURCES                       ${LIBRARY_SRCS}
   HEADERS                       ${LIBRARY_HDRS}

@@ -263,7 +263,7 @@ void Create_Win32_Window(const wchar_t* title, int X_Pos, int Y_Pos, int Width, 
 {
 	if (Global_Properties.Class_Registry == false)
 	{
-		Global_Properties.DEAFULT_WINDOW_CLASS.style = CS_VREDRAW | CS_OWNDC;
+		Global_Properties.DEAFULT_WINDOW_CLASS.style = CS_VREDRAW | CS_HREDRAW | CS_OWNDC;
 		Global_Properties.DEAFULT_WINDOW_CLASS.lpfnWndProc = Default_Window_Proc;
 		Global_Properties.DEAFULT_WINDOW_CLASS.hInstance = GetModuleHandle(nullptr);
 		Global_Properties.DEAFULT_WINDOW_CLASS.lpszClassName = L"DEF_WINDOW_CALSS";
