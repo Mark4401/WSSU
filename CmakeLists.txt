@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22 FATAL_ERROR)
-project(Global_presets VERSION 0.1 LANGUAGES C CXX)
+project(Global_presets VERSION 0.1 LANGUAGES C CXX CUDA)
 
 set(CMAKE_C_STANDARD 17)
 set(CMAKE_C_STANDARD_REQUIRED ON)
@@ -8,6 +8,22 @@ set(CMAKE_C_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+
+set(CMAKE_CUDA_STANDARD 17)
+set(CMAKE_CUDA_ARCHITECTURES 86 89)
+
+set(CMAKE_MSVC_RUNTIME_LIBRARY
+	 "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL"
+)
+
+find_package(CUDAToolkit REQUIRED)
+
+include_directories(${CUDAToolkit_INCLUDE_DIRS})
+
+message("CMAKE_CUDA_ARCHITECTURES: ${CMAKE_CUDA_ARCHITECTURES}")
+message("CUDAToolkit_LIBRARY_ROOT: ${CUDAToolkit_LIBRARY_ROOT}")
+message("CUDAToolkit_INCLUDE_DIRS: ${CUDAToolkit_INCLUDE_DIRS}")
+message("CUDAToolkit_LIBRARY_DIR: ${CUDAToolkit_LIBRARY_DIR}")
 
 include(cmake/App_Builder.cmake)
 include(cmake/build_library.cmake)

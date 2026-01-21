@@ -1,6 +1,7 @@
 ﻿#include<WSML/WSML.h>
 //#include"DWM_Examples_demo.h"
 #include <iostream>
+#include"cuda_functions.h"
 
 using namespace std;
 
@@ -8,25 +9,32 @@ int main(int argv, char* argc[])
 {
     cout << "\ncalled from an C++ file! :p\n\n";
 
-    Init_Program(DPI_AWARENESS_FALSE, DISABLE_DWM_EDIT);
 
-    Init_Window(L"Test_Window! ;P | WSML i.e (WIndowing & State Management Library)",
-        1280, 720, true, CENTER_RIGHT);
+    CUDA_demo();
 
-    Process_Lists();
+    //Init_Program(DPI_AWARENESS_FALSE, DISABLE_DWM_EDIT);
 
-    Window window[1];
+    //Init_Window(L"Test_Window! ;P | WSML i.e (WIndowing & State Management Library)",
+    //    1280, 720, true, CENTER_RIGHT);
 
-    window[0].Address = Return_Window_Adress(L"Test_Window! ;P | WSML i.e (WIndowing & State Management Library)");
+    //Process_Lists();
 
-    cout << "\n\nTest_Window! ;P | WSML i.e (WIndowing & State Management Library) | Window Address: " 
-         << window[0].Address << "\n";
+    //Window window[1];
+
+    //window[0].Address = Return_Window_Adress(L"Test_Window! ;P | WSML i.e (WIndowing & State Management Library)");
+
+    //cout << "\n\nTest_Window! ;P | WSML i.e (WIndowing & State Management Library) | Window Address: " 
+    //     << window[0].Address << "\n";
 
 
-    while (System_Queue())
-    {
-        //return true;
-    };
+    //while (System_Queue())
+    //{
+    //    //return true;
+    //};
+
+    Cuda_call_from_lib();
 
     return 0;
 }
+
+// Telemetry

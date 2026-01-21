@@ -1,5 +1,5 @@
 ﻿cmake_minimum_required(VERSION 3.22 FATAL_ERROR)
-project(WSML VERSION 0.3 LANGUAGES C CXX)
+project(WSML VERSION 0.3 LANGUAGES C CXX CUDA)
 
 set(CMAKE_C_STANDARD 20)
 set(CMAKE_C_STANDARD_REQUIRED ON)
@@ -33,6 +33,10 @@ set(LIBRARY_HDRS
     "${CMAKE_CURRENT_SOURCE_DIR}/Include/WSML/Pulse.h"
 )
 
+set(CUDA_FILES
+    "${CMAKE_CURRENT_SOURCE_DIR}/Source/CUDA__/cuda_lib.cu"
+)
+
 #------------------------------------------------------------------------#
 # Project Shortcut-variables
 #------------------------------------------------------------------------#
@@ -49,7 +53,8 @@ build_and_export_library(${PROJECT_NAME}
   EXPORT_FLAG                   WSML_EXPORT 
   SOURCES                       ${LIBRARY_SRCS}
   HEADERS                       ${LIBRARY_HDRS}
-  LINK_LIBS                     d3d11 dxgi d3dcompiler dwmapi shcore uxtheme
+  CUDA_SOURCES                  ${CUDA_FILES}
+  LINK_LIBS                     d3d11 dxgi d3dcompiler dwmapi shcore uxtheme CUDA::cudart
   PUBLIC_INCLUDES               ${CMAKE_CURRENT_SOURCE_DIR}/Include
   PRIVATE_INCLUDES              ${CMAKE_CURRENT_SOURCE_DIR}/Internal
 )

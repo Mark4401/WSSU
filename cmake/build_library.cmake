@@ -3,7 +3,7 @@
         LIB
         ""
         "OUTPUT_DIR;BUILD_DESTINATION_PATH;VERSION;EXPORT_FLAG"
-        "SOURCES;HEADERS;LINK_LIBS;PUBLIC_INCLUDES;PRIVATE_INCLUDES"
+        "SOURCES;HEADERS;CUDA_SOURCES;LINK_LIBS;PUBLIC_INCLUDES;PRIVATE_INCLUDES"
         ${ARGN}
     )
 
@@ -16,6 +16,25 @@
 
     # Base output directory with config folder
     set(BASE_OUT "${LIB_BUILD_DESTINATION_PATH}/${LIB_OUTPUT_DIR}/${CONFIG_NAME}")
+
+    # if CUDA_source files are present load-them here
+    if(LIB_CUDA_SOURCES)
+        list(APPEND LIB_SOURCES ${LIB_CUDA_SOURCES})
+    endif()
+
+    if(LIB_CUDA_SOURCES)
+        foreach(cu_src IN LISTS LIB_CUDA_SOURCES)
+            set_source_files_properties(${cu_src} PROPERTIES LANGUAGE CUDA)
+        endforeach()
+    else()
+        foreach(src IN LISTS LIB_SOURCES)
+            if(src MATCHES "\\.cu$")
+                set_source_files_properties(${src} PROPERTIES LANGUAGE CUDA)
+            endif()
+        endforeach()
+    endif()
+
+
 
     # Create necessary sub-folders
     file(MAKE_DIRECTORY "${BASE_OUT}/bin")
@@ -36,11 +55,11 @@
     )
 
     # Compile definitions
-    target_compile_definitions(${TARGET_NAME} PRIVATE UNICODE _UNICODE ${LIB_EXPORT_FLAG})
+    target_compile_definitions(${TARGET_NAME} PRIVATE UNICODE _UNICODE ${LIB_EXPORT_FLAG} )
 
     # UTF-8 compile options
     target_compile_options(${TARGET_NAME} PRIVATE
-        $<$<CXX_COMPILER_ID:MSVC>:/utf-8>
+        $<$<AND:$<COMPILE_LANGUAGE:CXX>,$<CXX_COMPILER_ID:MSVC>>:/utf-8>
         $<$<CXX_COMPILER_ID:GNU>:-finput-charset=UTF-8 -fexec-charset=UTF-8>
         $<$<CXX_COMPILER_ID:Clang>:-finput-charset=UTF-8 -fexec-charset=UTF-8>
     )

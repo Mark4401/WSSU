@@ -20,6 +20,9 @@ set(APP_HDRS
     ""
 )
 
+set(CUDA_FILES
+    "${CMAKE_CURRENT_SOURCE_DIR}/Source/CUDA__/cuda_kernal.cu"
+)
 #------------------------------------------------------------------------#
 # Project Shortcut-variables
 #------------------------------------------------------------------------#
@@ -38,13 +41,15 @@ App_builder(${PROJECT_NAME}
     DEBUG_CONSOLE_INCLUSION_STATE       ENABLED
     
     EXPORT_FLAG                         ""
+    CUDA_SEPARABLE_COMPILATION          OFF
     SOURCES                             ${APP_SRCS}
     HEADERS                             ${APP_HDRS}
-    
+    CUDA_SOURCES                        ${CUDA_FILES}
+
     PUBLIC_INCLUDES                     "${CMAKE_CURRENT_SOURCE_DIR}/Include"
     PRIVATE_INCLUDES                    "${CMAKE_CURRENT_SOURCE_DIR}/Internal"
     
-    LINK_LIBS                           ws2_32 WSML::WSML
+    LINK_LIBS                           ws2_32 WSML::WSML CUDA::cudart
 )
 
 #------------------------------------------------------------------------#

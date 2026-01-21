@@ -107,7 +107,7 @@ static void PaintCustomCaption(HWND hWnd, HDC hdc)
 			dib.bmiHeader.biBitCount = BIT_COUNT;
 			dib.bmiHeader.biCompression = BI_RGB;
 
-			HBITMAP hbm = CreateDIBSection(hdc, &dib, DIB_RGB_COLORS, 0L, NULL, NULL);
+			HBITMAP hbm = CreateDIBSection(hdc, &dib, DIB_RGB_COLORS, 0, NULL, NULL);
 			if (hbm)
 			{
 				HBITMAP hbmOld = (HBITMAP)SelectObject(hdcPaint, hbm);

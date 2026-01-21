@@ -4,8 +4,8 @@ function(App_builder TARGET_NAME)
     cmake_parse_arguments(
         APP
         ""                                      # no single-letter args
-        "OUTPUT_DIR;BUILD_DESTINATION_PATH;WIN32;DEBUG_CONSOLE_INCLUSION_STATE;EXPORT_FLAG"          # single-value keywords
-        "SOURCES;HEADERS;LINK_LIBS;PUBLIC_INCLUDES;PRIVATE_INCLUDES"
+        "OUTPUT_DIR;BUILD_DESTINATION_PATH;WIN32;DEBUG_CONSOLE_INCLUSION_STATE;EXPORT_FLAG;CUDA_SEPARABLE_COMPILATION" 
+        "SOURCES;HEADERS;CUDA_SOURCES;LINK_LIBS;PUBLIC_INCLUDES;PRIVATE_INCLUDES"
         ${ARGN}
     )
 
@@ -18,6 +18,11 @@ function(App_builder TARGET_NAME)
 
     # Where the .exe will live
     set(OUT_DIR "${APP_BUILD_DESTINATION_PATH}/${APP_OUTPUT_DIR}/${CONFIG_NAME}")
+
+    # if CUDA_source files are present load-them here
+    if(APP_CUDA_SOURCES)
+        list(APPEND APP_SOURCES ${APP_CUDA_SOURCES})
+    endif()
 
     # Add executable (optionally WIN32 GUI)
     if(APP_WIN32)
@@ -48,7 +53,7 @@ function(App_builder TARGET_NAME)
     endif()
 
     target_compile_options(${TARGET_NAME} PRIVATE
-        $<$<CXX_COMPILER_ID:MSVC>:/utf-8>
+        $<$<AND:$<COMPILE_LANGUAGE:CXX>,$<CXX_COMPILER_ID:MSVC>>:/utf-8>
         $<$<CXX_COMPILER_ID:GNU>:-finput-charset=UTF-8 -fexec-charset=UTF-8>
         $<$<CXX_COMPILER_ID:Clang>:-finput-charset=UTF-8 -fexec-charset=UTF-8>
     )
@@ -97,8 +102,22 @@ function(App_builder TARGET_NAME)
         endif()
     endif()
 
+
+    if(APP_CUDA_SOURCES)
+        foreach(cu_src IN LISTS LIB_CUDA_SOURCES)
+            set_source_files_properties(${cu_src} PROPERTIES LANGUAGE CUDA)
+        endforeach()
+    else()
+        foreach(src IN LISTS APP_SOURCES)
+            if(src MATCHES "\\.cu$")
+                set_source_files_properties(${src} PROPERTIES LANGUAGE CUDA)
+            endif()
+        endforeach()
+    endif()
+
     # Set output directories
     set_target_properties(${TARGET_NAME} PROPERTIES
+        CUDA_SEPARABLE_COMPILATION ${APP_CUDA_SEPARABLE_COMPILATION}
         ARCHIVE_OUTPUT_DIRECTORY "${OUT_DIR}"
         LIBRARY_OUTPUT_DIRECTORY "${OUT_DIR}"
         RUNTIME_OUTPUT_DIRECTORY "${OUT_DIR}"
